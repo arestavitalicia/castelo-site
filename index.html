@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Castelo | Fourteen Residences in Setúbal, Portugal</title>
+<meta name="description" content="Fourteen residences in Setúbal's historic centre. Three buildings, a private garden, and a 17th-century bastion at your back.">
+<meta property="og:title" content="Castelo | Setúbal">
+<meta property="og:description" content="Fourteen residences in Setúbal's historic centre. Where what was meets what is about to be.">
+<meta property="og:image" content="https://castelo.living/hero.jpg">
+<meta property="og:url" content="https://castelo.living">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Lobster:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="leaflet.css"/>
+<script src="leaflet.js"></script>
+<style>
+:root {
+  --navy: #2C3E50;
+  --navy-deep: #1B2838;
+  --gold: #C8C0B4;
+  --gold-light: #D4CEC4;
+  --gold-pale: #F2F0EC;
+  --cream: #FAF8F5;
+  --white: #FFFFFF;
+  --text: #2C3E50;
+  --text-light: #6B7B8D;
+  --text-muted: #9EAAB6;
+  --border: #E8E4DE;
+  --serif: 'Oswald', sans-serif;
+  --sans: 'Schibsted Grotesk', sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--sans); color:var(--text); background:var(--white); -webkit-font-smoothing:antialiased; }
+
+/* ─── NAV ─── */
+nav {
+  position:fixed; top:0; width:100%; z-index:1000;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:0 60px; height:80px;
+  background:rgba(255,255,255,0.97); backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(0,0,0,0.06); transition:all 0.4s;
+}
+nav.scrolled { box-shadow:0 4px 30px rgba(0,0,0,0.06); }
+.nav-brand { font-family: 'Lobster', cursive; font-size:28px; font-weight:400; color:var(--navy); letter-spacing:2px; }
+.nav-center { display:flex; gap:40px; list-style:none; position:absolute; left:50%; transform:translateX(-50%); }
+.nav-center a { text-decoration:none; color:var(--text-light); font-size:11px; font-weight:500; letter-spacing:2px; text-transform:uppercase; transition:color 0.3s; position:relative; }
+.nav-center a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:1px; background:var(--gold); transition:width 0.3s; }
+.nav-center a:hover { color:var(--navy); }
+.nav-center a:hover::after { width:100%; }
+.nav-right { display:flex; align-items:center; gap:20px; }
+.lang-toggle { display:flex; gap:6px; }
+.lang-btn { background:none; border:none; cursor:pointer; font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:1.5px; color:var(--text-muted); padding:6px 10px; transition:all 0.3s; }
+.lang-btn.active { color:var(--navy); background:var(--gold-pale); border-radius:3px; }
+.nav-cta { padding:10px 24px; background:var(--navy); color:var(--white); font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; border:none; cursor:pointer; transition:all 0.3s; text-decoration:none; }
+.nav-cta:hover { background:var(--gold); color:var(--navy); }
+
+/* ─── HERO ─── */
+.hero {
+  margin-top:80px; height:calc(100vh - 80px); min-height:600px;
+  display:grid; grid-template-columns:1fr 1fr; overflow:hidden;
+}
+.hero-text {
+  display:flex; flex-direction:column; justify-content:center;
+  padding:80px 100px; background:var(--navy); color:var(--white); position:relative;
+}
+.hero-label { font-size:11px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:30px; opacity:0; animation:fadeUp .8s .3s forwards; }
+.hero h1 { font-family: 'Lobster', cursive; font-size:76px; font-weight:400; line-height:1.0; margin-bottom:30px; opacity:0; animation:fadeUp .8s .5s forwards; }
+.hero-sub { font-size:16px; color:rgba(255,255,255,0.85); line-height:1.8; max-width:380px; margin-bottom:50px; font-weight:300; opacity:0; animation:fadeUp .8s .7s forwards; }
+.hero-actions { display:flex; gap:20px; opacity:0; animation:fadeUp .8s .9s forwards; }
+.hero-visual {
+  position:relative; overflow:hidden;
+  background:url('hero.jpg') center/cover no-repeat;
+  display:flex; align-items:center; justify-content:center;
+}
+.img-placeholder {
+  text-align:center; color:rgba(255,255,255,0.12);
+  font-family:var(--serif); font-size:13px; letter-spacing:3px; text-transform:uppercase;
+}
+.img-placeholder .ph-icon { font-size:48px; display:block; margin-bottom:14px; opacity:0.4; }
+
+/* ─── BUTTONS ─── */
+.btn-gold { padding:16px 40px; background:var(--gold); color:var(--navy); font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; border:none; cursor:pointer; transition:all .4s; text-decoration:none; display:inline-block; }
+.btn-gold:hover { background:var(--gold-light); transform:translateY(-2px); box-shadow:0 10px 30px rgba(200,192,180,0.3); }
+.btn-outline { padding:16px 40px; background:transparent; color:var(--white); border:1px solid rgba(255,255,255,0.3); font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; cursor:pointer; transition:all .3s; text-decoration:none; display:inline-block; }
+.btn-outline:hover { background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.6); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* ─── REVEAL ─── */
+.reveal { opacity:0; transform:translateY(40px); transition:all .8s cubic-bezier(.16,1,.3,1); }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ─── FULL BLEED IMAGE BREAK ─── */
+.img-break {
+  width:100%; display:grid; overflow:hidden;
+}
+.img-break.duo { grid-template-columns:1fr 1fr; min-height:500px; }
+.img-break.trio { grid-template-columns:1fr 1fr 1fr; min-height:420px; }
+.img-break.solo { min-height:550px; }
+.img-break.with-quote { grid-template-columns:2fr 1fr; min-height:500px; }
+.img-break > * { min-height:400px; }
+
+.img-slot {
+  background:linear-gradient(135deg,#5DADE2,#7DBDE8);
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden; position:relative;
+}
+.img-slot.warm { background:linear-gradient(135deg,#D4CEC4,#C8C0B4); }
+.img-slot.dark { background:linear-gradient(135deg,#3D5A73,#2C3E50); }
+.img-slot.sage { background:linear-gradient(135deg,#8FA98B,#A8BEA5); }
+.img-slot.sand { background:linear-gradient(135deg,#D4C5A9,#C2B594); }
+.img-slot.stone { background:linear-gradient(135deg,#B8B0A3,#A39B8E); }
+
+.img-slot .img-placeholder { color:rgba(255,255,255,0.1); }
+
+.quote-slot {
+  background:var(--navy); display:flex; align-items:center; justify-content:center;
+  padding:60px; color:var(--white);
+}
+.quote-slot blockquote {
+  font-family:var(--serif); font-size:30px; font-weight:300;
+  line-height:1.5; font-style:normal; color:rgba(255,255,255,0.85);
+  max-width:400px;
+}
+.quote-slot cite {
+  display:block; margin-top:25px; font-style:normal;
+  font-family:var(--sans); font-size:11px; font-weight:600;
+  letter-spacing:2px; text-transform:uppercase; color:var(--gold);
+}
+
+/* ─── SECTION SHARED ─── */
+.section-pad { padding:120px 80px; }
+.section-label { font-size:11px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:20px; display:none; }
+.section-title { font-family:var(--serif); font-size:52px; font-weight:300; line-height:1.15; color:var(--navy); }
+.section-title em { font-style:normal; color:inherit; }
+
+/* ─── LIFESTYLE TAGLINE ─── */
+.tagline {
+  padding:100px 80px; text-align:center;
+  background:var(--cream);
+}
+.tagline h2 {
+  font-family:var(--serif); font-size:44px; font-weight:300;
+  line-height:1.5; color:var(--navy); max-width:800px; margin:0 auto;
+}
+.tagline h2 em { font-style:normal; color:inherit; }
+
+/* ─── ABOUT SETÚBAL ─── */
+.about {
+  display:grid; grid-template-columns:1fr 1fr;
+  background:var(--white);
+}
+.about-text {
+  padding:120px 80px; display:flex; flex-direction:column; justify-content:center;
+}
+.about-text p { color:var(--text-light); font-size:16px; line-height:2; margin-top:25px; max-width:480px; }
+
+/* ─── PROJECT ─── */
+.project { background:var(--cream); }
+.project-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; margin-top:40px; }
+.project-features { display:flex; flex-direction:column; gap:40px; }
+.pf-item { padding:40px 0; border-bottom:1px solid var(--border); }
+.pf-item h3 { font-family:var(--serif); font-size:26px; font-weight:400; margin-bottom:15px; color:var(--navy); }
+.pf-item p { color:var(--text-light); font-size:15px; line-height:1.8; }
+.project-visual {
+  position:sticky; top:120px; height:600px; border-radius:4px; overflow:hidden;
+  background:linear-gradient(135deg,#3D5A73,#5A7B95);
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* ─── LOCATION ─── */
+.location { display:grid; grid-template-columns:1fr 1fr; background:var(--white); }
+.location-map {
+  background:linear-gradient(135deg,#D4CEC4,#C8C0B4);
+  display:flex; align-items:center; justify-content:center; min-height:600px;
+}
+.location-content { padding:120px 80px; display:flex; flex-direction:column; justify-content:center; }
+.loc-grid { display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-top:50px; }
+.loc-item { padding-left:20px; border-left:2px solid var(--gold); }
+.loc-item strong { display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:4px; }
+.loc-item span { font-size:13px; color:var(--text-muted); }
+
+/* ─── VIDEO / 3D ─── */
+.media-section { background:var(--navy-deep); padding:120px 80px; text-align:center; color:var(--white); }
+.media-placeholder {
+  max-width:1000px; margin:60px auto 0; aspect-ratio:16/9;
+  background:rgba(255,255,255,0.04); border:1px dashed rgba(255,255,255,0.12);
+  border-radius:4px; display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:15px; color:rgba(255,255,255,0.25);
+  font-size:13px; letter-spacing:2px; text-transform:uppercase;
+}
+.play-icon {
+  width:80px; height:80px; border:2px solid rgba(255,255,255,0.15);
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:24px; transition:all .3s; cursor:pointer;
+}
+.play-icon:hover { background:rgba(255,255,255,0.08); border-color:var(--gold); }
+
+/* ─── APARTMENTS TABLE ─── */
+.apartments { background:var(--white); }
+.apt-table-wrap { margin-top:50px; overflow-x:auto; }
+.apt-table { width:100%; border-collapse:collapse; font-size:14px; }
+.apt-table thead th { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); padding:16px 20px; border-bottom:2px solid var(--navy); text-align:left; white-space:nowrap; }
+.apt-table tbody tr { border-bottom:1px solid var(--border); transition:background .2s; }
+.apt-table tbody tr:hover { background:var(--gold-pale); }
+.apt-table td { padding:20px; vertical-align:middle; color:var(--text); white-space:nowrap; }
+.apt-table .apt-name { font-family:var(--serif); font-size:18px; font-weight:500; color:var(--navy); }
+.apt-table .apt-building { font-size:11px; color:var(--text-muted); letter-spacing:1px; text-transform:uppercase; }
+.apt-badge { display:inline-block; padding:4px 12px; background:var(--gold-pale); color:#8A8279; font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; border-radius:2px; }
+.apt-badge.crown { background:var(--navy); color:var(--gold); border:1px solid var(--gold); }
+.apt-badge.seaview { background:#EAF3F7; color:#4A7E96; }
+.apt-table tbody tr.apt-featured { background:rgba(200,192,180,0.07); border-left:3px solid var(--gold); }
+.apt-table tbody tr.apt-featured:hover { background:var(--gold-pale); }
+.apt-dl { display:inline-flex; align-items:center; gap:6px; color:#8A8279; font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; text-decoration:none; cursor:pointer; transition:color .3s; background:none; border:none; font-family:var(--sans); }
+.apt-dl:hover { color:var(--navy); }
+.apt-real { font-size:18px; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; transition:all .3s; }
+.apt-real:hover { background:var(--gold-pale); transform:scale(1.2); }
+.brochure-bar { margin-top:60px; padding:40px 50px; background:var(--navy); display:flex; justify-content:space-between; align-items:center; border-radius:4px; }
+.brochure-bar p { color:rgba(255,255,255,0.6); font-size:15px; }
+.brochure-bar strong { color:var(--white); display:block; font-family:var(--serif); font-size:22px; font-weight:400; margin-bottom:4px; }
+
+/* ─── TEAM (compact) ─── */
+.team-strip {
+  background:var(--cream); padding:60px 80px;
+  border-top:1px solid var(--border);
+}
+.team-strip-inner {
+  display:flex; align-items:center; justify-content:center;
+  gap:40px; flex-wrap:wrap; flex-direction:column;
+}
+.team-strip-label {
+  font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase;
+  color:var(--text-muted); white-space:nowrap;
+}
+.team-logos-row {
+  display:flex; gap:50px; align-items:center;
+}
+.team-logo-box {
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  text-decoration:none;
+}
+.team-logo-img {
+  width:100px; height:48px;
+  background:var(--white); border:1px solid var(--border); border-radius:4px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:10px; font-weight:700; letter-spacing:1px; color:#8A8279;
+  transition:all .3s;
+}
+.team-logo-box:hover .team-logo-img { border-color:var(--gold); box-shadow:0 4px 15px rgba(200,192,180,0.15); }
+.team-logo-caption {
+  font-size:10px; color:var(--text-muted); letter-spacing:1px; text-transform:uppercase;
+}
+
+/* ─── CONTACT ─── */
+.contact { background:var(--navy-deep); display:grid; grid-template-columns:1fr 1fr; min-height:700px; }
+.contact-info { padding:120px 80px; display:flex; flex-direction:column; justify-content:center; color:var(--white); border-right:1px solid rgba(255,255,255,0.06); }
+.contact-info .section-title { color:var(--white); }
+.contact-info .section-title em { color:inherit; }
+.contact-info p { color:rgba(255,255,255,0.5); font-size:15px; line-height:1.8; margin-top:25px; max-width:400px; }
+.contact-details { margin-top:50px; display:flex; flex-direction:column; gap:20px; }
+.cd-item { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.3); }
+.cd-item a,.cd-item span { display:block; margin-top:5px; font-family:var(--serif); font-size:20px; font-weight:400; letter-spacing:0; text-transform:none; color:var(--white); text-decoration:none; }
+.contact-form-wrap { padding:120px 80px; display:flex; flex-direction:column; justify-content:center; }
+.contact-form { display:flex; flex-direction:column; gap:28px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+.field label { display:block; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:10px; }
+.field input,.field textarea,.field select { width:100%; padding:14px 0; background:transparent; border:none; border-bottom:1px solid rgba(255,255,255,0.15); color:var(--white); font-family:var(--sans); font-size:15px; outline:none; transition:border-color .3s; }
+.field select option { color:var(--text); background:var(--white); }
+.field input::placeholder,.field textarea::placeholder { color:rgba(255,255,255,0.2); }
+.field input:focus,.field textarea:focus,.field select:focus { border-bottom-color:var(--gold); }
+.field textarea { min-height:80px; resize:vertical; }
+.submit-btn { margin-top:20px; align-self:flex-start; padding:18px 50px; background:var(--gold); color:var(--navy); font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; border:none; cursor:pointer; transition:all .4s; }
+.submit-btn:hover { background:var(--gold-light); transform:translateY(-2px); box-shadow:0 10px 30px rgba(200,192,180,0.3); }
+
+/* ─── FOOTER ─── */
+footer { background:#111B24; padding:50px 80px; display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.05); flex-wrap:wrap; gap:20px; }
+.footer-left { font-family: 'Lobster', cursive; font-size:20px; color:rgba(255,255,255,0.3); letter-spacing:2px; }
+.footer-center { display:flex; gap:40px; }
+.footer-center a { font-size:11px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.25); text-decoration:none; transition:color .3s; }
+.footer-center a:hover { color:var(--gold); }
+.footer-right { font-size:12px; color:rgba(255,255,255,0.15); }
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1024px){
+  .hero{grid-template-columns:1fr} .hero-text{padding:80px 40px} .hero h1{font-size:52px}
+  .hero-visual{min-height:350px}
+  .about,.location,.contact{grid-template-columns:1fr}
+  .about-text,.location-content,.contact-info,.contact-form-wrap{padding:80px 40px}
+  .section-pad{padding:80px 40px}
+  .project-grid{grid-template-columns:1fr}
+  .project-visual{position:relative;top:auto;height:350px}
+  .section-title{font-size:38px}
+  .tagline h2{font-size:32px}
+  nav{padding:0 20px} .nav-center{display:none}
+  .img-break.duo,.img-break.trio{grid-template-columns:1fr;min-height:auto}
+  .img-break > *{min-height:300px}
+  .img-break.with-quote{grid-template-columns:1fr}
+  .quote-slot{padding:60px 40px}
+  .quote-slot blockquote{font-size:24px}
+  .team-strip{padding:40px}
+  .team-strip-inner{flex-direction:column;text-align:center}
+  .location-map{min-height:400px}
+}
+@media(max-width:600px){
+  .hero h1{font-size:44px} .hero-actions{flex-direction:column}
+  .loc-grid{grid-template-columns:1fr} .form-row{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center;padding:40px}
+  .footer-center{flex-wrap:wrap;justify-content:center}
+  .team-logos-row{flex-wrap:wrap;justify-content:center;gap:30px}
+  .tagline{padding:60px 30px} .tagline h2{font-size:26px}
+  .img-break > *{min-height:250px}
+}
+/* ─── MAP ─── */
+.castelo-pin {
+  background:var(--navy); border:2px solid var(--gold);
+  color:var(--gold); font-family:'Lobster',cursive; font-size:15px;
+  padding:7px 14px; border-radius:3px; white-space:nowrap;
+  box-shadow:0 4px 18px rgba(0,0,0,0.35); position:relative;
+  cursor:default;
+}
+.castelo-pin::after {
+  content:''; position:absolute; bottom:-9px; left:50%; transform:translateX(-50%);
+  border-left:8px solid transparent; border-right:8px solid transparent;
+  border-top:9px solid var(--gold);
+}
+.poi-pin {
+  width:12px; height:12px; border-radius:50%;
+  border:2px solid rgba(255,255,255,0.9);
+  box-shadow:0 2px 8px rgba(0,0,0,0.3);
+  cursor:pointer; transition:transform .2s;
+}
+.poi-pin:hover { transform:scale(1.4); }
+.leaflet-popup-content-wrapper {
+  border-radius:3px; box-shadow:0 6px 24px rgba(0,0,0,0.15);
+  font-family:var(--sans); font-size:13px;
+}
+.leaflet-popup-content { margin:12px 16px; line-height:1.6; }
+.leaflet-popup-content strong { font-size:14px; color:var(--navy); display:block; margin-bottom:2px; }
+.leaflet-popup-content span { color:var(--text-muted); font-size:12px; }
+.leaflet-popup-tip { background:white; }
+.leaflet-control-attribution { font-size:10px; }
+.whatsapp-float {
+  position:fixed; bottom:30px; right:30px; z-index:990;
+  width:56px; height:56px; background:var(--navy); border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 20px rgba(44,62,80,0.4);
+  text-decoration:none; transition:all .3s;
+  border:1px solid var(--gold);
+}
+.whatsapp-float svg { width:26px; height:26px; fill:var(--gold); }
+.whatsapp-float:hover { background:var(--gold); box-shadow:0 6px 28px rgba(200,192,180,0.4); }
+.whatsapp-float:hover svg { fill:var(--navy); }
+
+/* ─── WHATSAPP ICON LINK in contact ─── */
+.wa-icon-link { display:inline-flex; align-items:center; transition:opacity .3s; }
+.wa-icon-link:hover { opacity:0.7; }
+
+/* ─── MOBILE STICKY ENQUIRE ─── */
+.mobile-enquire {
+  display:none; position:fixed; bottom:0; left:0; right:0; z-index:980;
+  padding:12px 16px; background:var(--navy);
+  box-shadow:0 -4px 20px rgba(0,0,0,0.2);
+}
+.mobile-enquire a {
+  display:block; text-align:center; background:var(--gold); color:var(--navy);
+  padding:15px; font-family:var(--sans); font-size:11px; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase; text-decoration:none;
+}
+@media(max-width:768px){
+  .mobile-enquire { display:block; }
+  .whatsapp-float { bottom:88px; }
+  body { padding-bottom:72px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-brand">Castelo</div>
+  <ul class="nav-center">
+    <li><a href="#apartments" data-en="Apartments" data-pt="Apartamentos">Apartments</a></li>
+    <li><a href="#project" data-en="Project" data-pt="Projeto">Project</a></li>
+    <li><a href="#about" data-en="Setúbal" data-pt="Setúbal">Setúbal</a></li>
+    <li><a href="#contact" data-en="Contact" data-pt="Contacto">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="pt">PT</button>
+    </div>
+    <a href="#contact" class="nav-cta" data-en="Enquire" data-pt="Contactar">Enquire</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <h1>Castelo</h1>
+    <p class="hero-sub" data-en="Some addresses are found. Others have been waiting centuries to be discovered. On a street still named for the fortress that once guarded this coast, fourteen residences rise from stone that remembers." data-pt="Alguns endereços encontram-se. Outros estiveram séculos à espera de ser descobertos. Numa rua que ainda leva o nome da fortaleza que outrora guardava esta costa, catorze residências erguem-se de pedra que se lembra.">Some addresses are found. Others have been waiting centuries to be discovered. On a street still named for the fortress that once guarded this coast, fourteen residences rise from stone that remembers.</p>
+    <div class="hero-actions">
+      <a href="#apartments" class="btn-gold" data-en="Explore Residences" data-pt="Explorar Residências">Explore Residences</a>
+      <a href="project_plans.pdf" download class="btn-outline" data-en="Download Brochure" data-pt="Descarregar Brochura">Download Brochure</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+  </div>
+</section>
+
+<!-- TAGLINE -->
+<div class="tagline reveal">
+  <h2 data-en="Where what was meets what is about to be." data-pt="Onde o que foi encontra o que está para ser.">Where what was meets what is about to be.</h2>
+</div>
+
+<!-- APARTMENTS TABLE -->
+<section id="apartments" class="apartments section-pad">
+  <div class="section-header reveal">
+    <h2 class="section-title" data-en="Fourteen Residences. No Two Alike." data-pt="Catorze Residências. Nenhuma Igual.">Fourteen Residences. No Two Alike.</h2>
+  </div>
+  <div class="reveal" style="max-width:800px; margin-bottom:60px;">
+    <p style="color:var(--text-light); font-size:16px; line-height:2; margin-bottom:20px;" data-en="Different floor. Different orientation. Different proportions. Different light. Across three buildings and fourteen residences, no two are alike. Each was drawn from scratch, shaped by its position in the complex, its relationship to the garden, the street, the old wall, the sky." data-pt="Piso diferente. Orientação diferente. Proporções diferentes. Luz diferente. Em três edifícios e catorze residências, nenhuma é igual. Cada uma foi desenhada de raiz, moldada pela sua posição no complexo, pela sua relação com o jardim, a rua, a muralha antiga, o céu.">Different floor. Different orientation. Different proportions. Different light. Across three buildings and fourteen residences, no two are alike. Each was drawn from scratch, shaped by its position in the complex, its relationship to the garden, the street, the old wall, the sky.</p>
+    <p style="color:var(--text-light); font-size:16px; line-height:2; margin-bottom:20px;" data-en="Studios on the ground floor open directly to the private garden. First-floor one-bedrooms, calm and well-proportioned. Upper-floor duplexes with terraces that hold the afternoon light. And crowning the complex, a single three-bedroom duplex at 147 m²." data-pt="Os estúdios no rés-do-chão abrem diretamente para o jardim privado. Os apartamentos T1 no primeiro andar, calmos e bem proporcionados. Os duplex nos pisos superiores com terraços que retêm a luz da tarde. E a coroar o complexo, um único duplex T3 com 147 m².">Studios on the ground floor open directly to the private garden. First-floor one-bedrooms, calm and well-proportioned. Upper-floor duplexes with terraces that hold the afternoon light. And crowning the complex, a single three-bedroom duplex at 147 m².</p>
+    <p style="color:var(--text-light); font-size:16px; line-height:2; margin-bottom:20px;" data-en="Sizes from 37 to 147 m². Each with its own character. All at the same extraordinary address." data-pt="Áreas de 37 a 147 m². Cada um com o seu próprio carácter. Todos no mesmo endereço extraordinário.">Sizes from 37 to 147 m². Each with its own character. All at the same extraordinary address.</p>
+    <p style="color:var(--navy); font-size:16px; line-height:2; font-weight:600;" data-en="Every home here exists only once." data-pt="Cada casa aqui existe apenas uma vez.">Every home here exists only once.</p>
+    <p style="color:var(--text-light); font-size:14px; line-height:1.9; margin-top:24px; padding-top:24px; border-top:1px solid var(--border);" data-en="Castelo suits equally those seeking a primary residence and those making a long-term investment. Setúbal's rising profile, its proximity to Lisbon, and the scarcity of new development in the historic centre combine to make this an address that is unlikely to be replicated." data-pt="O Castelo é igualmente adequado para quem procura uma residência principal e para quem faz um investimento a longo prazo. O crescente prestígio de Setúbal, a proximidade a Lisboa e a escassez de novos projetos no centro histórico fazem deste um endereço que dificilmente se repetirá.">Castelo suits equally those seeking a primary residence and those making a long-term investment. Setúbal's rising profile, its proximity to Lisbon, and the scarcity of new development in the historic centre combine to make this an address that is unlikely to be replicated.</p>
+  </div>
+  <div class="apt-table-wrap reveal">
+    <table class="apt-table">
+      <thead><tr>
+        <th data-en="Apt." data-pt="Apart.">Apt.</th>
+        <th data-en="Building" data-pt="Edifício">Building</th>
+        <th data-en="Floor" data-pt="Piso">Floor</th>
+        <th data-en="Type" data-pt="Tipo">Type</th>
+        <th data-en="Interior" data-pt="Interior">Interior</th>
+        <th data-en="Exterior" data-pt="Exterior">Exterior</th>
+        <th data-en="Parking" data-pt="Estacionamento">Parking</th>
+        <th data-en="Plan" data-pt="Planta">Plan</th>
+        <th data-en="Real" data-pt="Real">Real</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="apt-name">01</td><td class="apt-building">A</td><td>0</td><td><span class="apt-badge">Studio+</span></td><td>84 m²</td><td>—</td><td>—</td><td><button class="apt-dl" onclick="openPlan('ap1.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td><a href="https://reals.simplex3d.com/real/6a0dc2244a6cf570888fc069" target="_blank" class="apt-real" title="3D Virtual Tour">👁</a></td></tr>
+        <tr><td class="apt-name">02</td><td class="apt-building">A</td><td>1</td><td><span class="apt-badge">T1</span></td><td>71 m²</td><td>—</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap2.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td><a href="https://reals.simplex3d.com/real/6a0dc5854a6cf570888fc07d" target="_blank" class="apt-real" title="3D Virtual Tour">👁</a></td></tr>
+        <tr class="apt-featured"><td class="apt-name">03</td><td class="apt-building">A</td><td>2–3</td><td><span class="apt-badge duplex">T2 Duplex</span> <span class="apt-badge seaview">Sea View</span></td><td>138 m²</td><td>4 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap3.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td><a href="https://reals.simplex3d.com/real/6a0dc6394a6cf570888fc091" target="_blank" class="apt-real" title="3D Virtual Tour">👁</a></td></tr>
+        <tr><td class="apt-name">04</td><td class="apt-building">B</td><td>1</td><td><span class="apt-badge">Studio</span></td><td>37 m²</td><td>—</td><td>—</td><td><button class="apt-dl" onclick="openPlan('ap4.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td><a href="https://reals.simplex3d.com/real/6a0dc60e4a6cf570888fc087" target="_blank" class="apt-real" title="3D Virtual Tour">👁</a></td></tr>
+        <tr><td class="apt-name">05</td><td class="apt-building">B</td><td>1</td><td><span class="apt-badge">Studio+</span></td><td>41 m²</td><td>6 m²</td><td>—</td><td><button class="apt-dl" onclick="openPlan('ap5.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr><td class="apt-name">06</td><td class="apt-building">B</td><td>1</td><td><span class="apt-badge">Studio+</span></td><td>42 m²</td><td>—</td><td>—</td><td><button class="apt-dl" onclick="openPlan('ap6.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr><td class="apt-name">07</td><td class="apt-building">B</td><td>2</td><td><span class="apt-badge">Studio+</span></td><td>41 m²</td><td>12 m²</td><td>—</td><td><button class="apt-dl" onclick="openPlan('ap7.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr class="apt-featured"><td class="apt-name">08</td><td class="apt-building">B</td><td>2–3</td><td><span class="apt-badge duplex">T3 Duplex</span> <span class="apt-badge crown">Crown</span></td><td>147 m²</td><td>11 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap8.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr><td class="apt-name">09</td><td class="apt-building">B</td><td>2–3</td><td><span class="apt-badge duplex">T1+1 Duplex</span></td><td>70 m²</td><td>8 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap9.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr><td class="apt-name">10</td><td class="apt-building">C</td><td>1</td><td><span class="apt-badge">T1</span></td><td>58 m²</td><td>—</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap10.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr><td class="apt-name">11</td><td class="apt-building">C</td><td>1</td><td><span class="apt-badge">T1</span></td><td>61 m²</td><td>4 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap11.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr><td class="apt-name">12</td><td class="apt-building">C</td><td>2–3</td><td><span class="apt-badge duplex">T1+1 Duplex</span></td><td>100 m²</td><td>1 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap12.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr><td class="apt-name">13</td><td class="apt-building">C</td><td>2–3</td><td><span class="apt-badge duplex">T2 Duplex</span></td><td>118 m²</td><td>14 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap13.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr><td class="apt-name">14</td><td class="apt-building">C</td><td>2–3</td><td><span class="apt-badge duplex">T2 Duplex</span></td><td>114 m²</td><td>13 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap14.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Project Plans Bar -->
+  <div style="margin-top:60px; display:flex; gap:20px; flex-wrap:wrap;" class="reveal">
+    <a href="#" onclick="openPlan('project_plans.pdf'); return false;" class="btn-gold" style="flex:1; text-align:center; min-width:200px;" data-en="View Full Project Plans" data-pt="Ver Todos os Planos do Projeto">View Full Project Plans</a>
+    <a href="project_plans.pdf" download class="btn-gold" style="flex:1; text-align:center; min-width:200px; background:var(--navy); color:var(--white);" data-en="↓ Download Project PDF" data-pt="↓ Descarregar PDF do Projeto">↓ Download Project PDF</a>
+    <a href="#" target="_blank" class="btn-gold" style="flex:1; text-align:center; min-width:200px; background:transparent; color:var(--navy); border:1px solid var(--border);" data-en="👁 Full Project Real" data-pt="👁 Real Completo do Projeto">👁 Full Project Real</a>
+  </div>
+</section>
+
+<!-- PDF LIGHTBOX MODAL -->
+<div id="pdfModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; justify-content:center; align-items:center; flex-direction:column; gap:20px;">
+  <div style="position:absolute; top:20px; right:30px; display:flex; gap:15px; z-index:10001;">
+    <a id="pdfDownload" href="#" download style="padding:10px 25px; background:var(--gold); color:var(--navy); font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; text-decoration:none; border-radius:3px;">↓ Download</a>
+    <button onclick="closePlan()" style="background:none; border:1px solid rgba(255,255,255,0.3); color:white; font-size:24px; width:44px; height:44px; cursor:pointer; border-radius:3px; display:flex; align-items:center; justify-content:center;">✕</button>
+  </div>
+  <iframe id="pdfViewer" src="" style="width:90%; max-width:900px; height:80vh; border:none; border-radius:4px; background:white;"></iframe>
+</div>
+
+<!-- PROJECT -->
+<section id="project" class="project section-pad">
+  <div class="section-header reveal">
+    <h2 class="section-title" data-en="Where Stone Meets Light" data-pt="Onde a Pedra Encontra a Luz">Where Stone Meets Light</h2>
+  </div>
+  <div class="project-grid">
+    <div class="project-features">
+      <div class="pf-item reveal">
+        <h3 data-en="One of a Kind" data-pt="Único">One of a Kind</h3>
+        <p data-en="In Setúbal's historic centre, a residential complex of this scale simply does not exist. Three buildings, fourteen residences, a private garden with a swimming pool, underground parking. Given the nature of the area, it is unlikely to exist again." data-pt="No centro histórico de Setúbal, um complexo residencial desta escala simplesmente não existe. Três edifícios, catorze residências, um jardim privado com piscina, estacionamento subterrâneo. Dada a natureza da zona, é improvável que volte a existir.">In Setúbal's historic centre, a residential complex of this scale simply does not exist. Three buildings, fourteen residences, a private garden with a swimming pool, underground parking. Given the nature of the area, it is unlikely to exist again.</p>
+      </div>
+      <div class="pf-item reveal">
+        <h3 data-en="Once in a Generation" data-pt="Uma Vez por Geração">Once in a Generation</h3>
+        <p data-en="Castelo occupies the kind of site that appears once in a generation. For all its roots in the past, this is a project designed entirely for the present. Spaces where character and comfort are not in tension, but in agreement." data-pt="O Castelo ocupa o tipo de local que surge uma vez por geração. Com todas as suas raízes no passado, este é um projeto concebido inteiramente para o presente. Espaços onde o carácter e o conforto não estão em tensão, mas em harmonia.">Castelo occupies the kind of site that appears once in a generation. For all its roots in the past, this is a project designed entirely for the present. Spaces where character and comfort are not in tension, but in agreement.</p>
+      </div>
+      <div class="pf-item reveal">
+        <h3 data-en="Old Language, New Life" data-pt="Linguagem Antiga, Vida Nova">Old Language, New Life</h3>
+        <p data-en="The architecture speaks the language of the street: traditional volumes, honest materials. Behind the façade, everything is new and built for a life well lived." data-pt="A arquitetura fala a linguagem da rua: volumes tradicionais, materiais honestos. Por detrás da fachada, tudo é novo e construído para uma vida bem vivida.">The architecture speaks the language of the street: traditional volumes, honest materials. Behind the façade, everything is new and built for a life well lived.</p>
+      </div>
+    </div>
+    <div class="project-visual reveal" style="background:url('ext1.jpg') center/cover no-repeat;"></div>
+  </div>
+</section>
+
+<!-- IMAGE BREAK 3 — Interiors duo -->
+<div class="img-break duo">
+  <div class="img-slot" style="background:url('interior1.png') center/cover no-repeat;"></div>
+  <div class="img-slot" style="background:url('interior3.png') center/cover no-repeat;"></div>
+</div>
+
+<!-- LOCATION -->
+<section class="location">
+  <div class="location-map" style="background:none; padding:0; overflow:hidden;">
+    <div id="castelo-map" style="width:100%; min-height:600px;"></div>
+  </div>
+  <div class="location-content">
+    <div class="reveal">
+      <h2 class="section-title" data-en="Everything Within Reach" data-pt="Tudo ao Seu Alcance">Everything Within Reach</h2>
+      <div class="loc-grid">
+        <div class="loc-item"><strong data-en="Sea" data-pt="Mar">Sea</strong><span>500 m</span></div>
+        <div class="loc-item"><strong data-en="Marina" data-pt="Marina">Marina</strong><span>250 m</span></div>
+        <div class="loc-item"><strong data-en="Dolphin Bay" data-pt="Baía dos Golfinhos">Dolphin Bay</strong><span>500 m</span></div>
+        <div class="loc-item"><strong data-en="Market" data-pt="Mercado">Market</strong><span>700 m</span></div>
+        <div class="loc-item"><strong data-en="Historic Fortress" data-pt="Fortaleza Histórica">Historic Fortress</strong><span>700 m</span></div>
+        <div class="loc-item"><strong data-en="School" data-pt="Escola">School</strong><span>1,000 m</span></div>
+        <div class="loc-item"><strong data-en="Beach" data-pt="Praia">Beach</strong><span>1,300 m</span></div>
+        <div class="loc-item"><strong data-en="Ferry to Tróia" data-pt="Ferry para Tróia">Ferry to Tróia</strong><span>1,300 m</span></div>
+        <div class="loc-item"><strong data-en="Train Station" data-pt="Estação de Comboios">Train Station</strong><span>1,400 m</span></div>
+        <div class="loc-item"><strong data-en="Lisbon" data-pt="Lisboa">Lisbon</strong><span data-en="30 min" data-pt="30 min">30 min</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMAGE BREAK 1 — Setúbal lifestyle -->
+<div class="img-break trio">
+  <div class="img-slot" style="background:url('jonas-von-werne-dolphins-unsplash.jpg') center/cover no-repeat;"></div>
+  <div class="img-slot" style="background:url('street2.png') center/cover no-repeat;"></div>
+  <div class="img-slot" style="background:url('couple%20in%20restaurante.png') center/cover no-repeat;"></div>
+</div>
+
+<!-- ABOUT SETÚBAL -->
+<section id="about" class="about">
+  <div class="about-text">
+    <div class="reveal">
+      <h2 class="section-title" data-en="A City That Simply Is" data-pt="Uma Cidade Que Simplesmente É">A City That Simply Is</h2>
+      <p data-en="Where the River Sado meets the Atlantic, a city has traded in salt, fish, poetry, and secrets for over two thousand years. The Romans knew it. The Moors fortified it. The Portuguese kings fought wars to keep it." data-pt="Onde o Rio Sado encontra o Atlântico, uma cidade viveu do sal, do peixe, da poesia e dos segredos durante mais de dois mil anos. Os Romanos conheciam-na. Os Mouros fortificaram-na. Os reis portugueses travaram guerras para a manter.">Where the River Sado meets the Atlantic, a city has traded in salt, fish, poetry, and secrets for over two thousand years. The Romans knew it. The Moors fortified it. The Portuguese kings fought wars to keep it.</p>
+      <p data-en="Today, Setúbal is what those who know Portugal well have always known: the coast at its most authentic. Morning markets, fishermen, narrow streets, Arrábida rising behind you like a cathedral of limestone and wild herbs. A fifteen-minute ferry to Tróia, a peninsula so pristine it feels borrowed from another continent." data-pt="Hoje, Setúbal é aquilo que quem conhece bem Portugal sempre soube: a costa na sua forma mais autêntica. Mercados matutinos, pescadores, ruas estreitas, a Arrábida a erguer-se como uma catedral de calcário e ervas silvestres. Um ferry de quinze minutos até Tróia, uma península tão imaculada que parece de outro continente.">Today, Setúbal is what those who know Portugal well have always known: the coast at its most authentic. Morning markets, fishermen, narrow streets, Arrábida rising behind you like a cathedral of limestone and wild herbs. A fifteen-minute ferry to Tróia, a peninsula so pristine it feels borrowed from another continent.</p>
+      <p data-en="A place that earns your attention quietly and keeps it forever." data-pt="Um lugar que conquista a sua atenção em silêncio e a mantém para sempre.">A place that earns your attention quietly and keeps it forever.</p>
+    </div>
+  </div>
+  <div class="img-slot" style="min-height:550px; background:url('alexandre-contador-seaview-unsplash.jpg') center/cover no-repeat;"></div>
+</section>
+
+<!-- THE WALL -->
+<div style="position:relative; min-height:550px; display:flex; align-items:center; justify-content:flex-end; overflow:hidden;">
+  <div class="img-slot" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; background:url('the%20wall.png') center/cover no-repeat;"></div>
+  <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(270deg, rgba(27,40,56,0.88) 0%, rgba(27,40,56,0.65) 45%, transparent 100%); z-index:2;"></div>
+  <div style="position:relative; z-index:3; padding:80px; max-width:550px; color:var(--white); text-align:left;" class="reveal">
+    <strong style="font-family:var(--serif); font-size:30px; display:block; margin-bottom:25px; color:var(--gold);" data-en="The Wall That Stayed" data-pt="A Muralha Que Permaneceu">The Wall That Stayed</strong>
+    <p style="font-size:16px; line-height:2; color:rgba(255,255,255,0.85); margin-bottom:15px;" data-en="In 1642, a military engineer named João Gilot drew a fortress around Setúbal. That line became stone. At the western edge, the Baluarte de São Francisco rose to guard one of Portugal's most vital ports." data-pt="Em 1642, um engenheiro militar chamado João Gilot desenhou uma fortaleza à volta de Setúbal. Essa linha tornou-se pedra. Na extremidade ocidental, o Baluarte de São Francisco ergueu-se para guardar um dos portos mais vitais de Portugal.">In 1642, a military engineer named João Gilot drew a fortress around Setúbal. That line became stone. At the western edge, the Baluarte de São Francisco rose to guard one of Portugal's most vital ports.</p>
+    <p style="font-size:16px; line-height:2; color:rgba(255,255,255,0.85); margin-bottom:15px;" data-en="Nearly four centuries later, the bastion still stands at the back of our land, silent, solid, unmoved. Earthquakes, a tsunami, and centuries of urban growth buried the old defences elsewhere. Here, the wall endured." data-pt="Quase quatro séculos depois, o baluarte ainda permanece atrás do nosso terreno, silencioso, sólido, imóvel. Terramotos, um tsunami e séculos de crescimento urbano enterraram as antigas defesas noutros locais. Aqui, a muralha resistiu.">Nearly four centuries later, the bastion still stands at the back of our land, silent, solid, unmoved. Earthquakes, a tsunami, and centuries of urban growth buried the old defences elsewhere. Here, the wall endured.</p>
+    <p style="font-size:16px; line-height:2; color:rgba(255,255,255,0.85);" data-en="Castelo is built alongside that history. The best foundations are the ones already proven by time." data-pt="O Castelo foi construído em diálogo com essa história. As melhores fundações são as que o tempo já provou.">Castelo is built alongside that history. The best foundations are the ones already proven by time.</p>
+  </div>
+</div>
+
+<!-- VIDEO / 3D BACKGROUND -->
+<section class="media-section" style="position:relative; min-height:600px; display:flex; align-items:center; justify-content:center; overflow:hidden; padding:0;">
+  <video autoplay muted loop poster="ext1.jpg" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+    <source src="castelofly.mp4" type="video/mp4">
+  </video>
+</section>
+
+<!-- IMAGE BREAK 4 — Bedrooms + bathroom -->
+<div class="img-break trio">
+  <div class="img-slot" style="background:url('interior4.png') center/cover no-repeat;"></div>
+  <div class="img-slot" style="background:url('interior5.png') center/cover no-repeat;"></div>
+  <div class="img-slot" style="background:url('interior2.png') center/cover no-repeat;"></div>
+</div>
+
+<!-- IMAGE BREAK 5 — Final exterior -->
+<div class="img-break solo">
+  <div class="img-slot" style="width:100%; background:url('ext2.png') center/cover no-repeat; min-height:550px;"></div>
+</div>
+
+<!-- TEAM (compact strip) -->
+<div id="team" class="team-strip">
+  <div class="team-strip-inner">
+    <span class="team-strip-label" data-en="A project by" data-pt="Um projeto de">A project by</span>
+    <div class="team-logos-row">
+      <a href="https://www.arestapt.com/" target="_blank" class="team-logo-box">
+        <div class="team-logo-img" style="background:url('aresta_logo.png') center/contain no-repeat; color:transparent;">ARESTA</div>
+        <span class="team-logo-caption" data-en="Developer" data-pt="Promotor">Developer</span>
+      </a>
+      <a href="https://globalnestportugal.com/about" target="_blank" class="team-logo-box">
+        <div class="team-logo-img" style="background:url('nest_logo.jpeg') center/contain no-repeat; color:transparent;">GLOBAL NEST</div>
+        <span class="team-logo-caption" data-en="Developer" data-pt="Promotor">Developer</span>
+      </a>
+      <span class="team-logo-box" style="cursor:default;">
+        <div class="team-logo-img" style="background:url('maven_logo.jpg') center/contain no-repeat; color:transparent;">MAVEN</div>
+        <span class="team-logo-caption" data-en="Project Management" data-pt="Gestão de Projeto">Project Management</span>
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="contact-info">
+    <div class="reveal">
+      <h2 class="section-title" style="color:var(--white);" data-en="The Next Chapter" data-pt="O Próximo Capítulo">The Next Chapter</h2>
+      <p style="color:rgba(255,255,255,0.7); font-size:16px; line-height:2; margin-top:25px;" data-en="Where the sea finds its way through stone streets, where history is a neighbour, and where the best of Portugal is right outside your door." data-pt="Onde o mar encontra o seu caminho pelas ruas de pedra, onde a história é uma vizinha, e onde o melhor de Portugal está mesmo à sua porta.">Where the sea finds its way through stone streets, where history is a neighbour, and where the best of Portugal is right outside your door.</p>
+      <p style="color:rgba(255,255,255,0.7); font-size:16px; line-height:2; margin-top:15px;" data-en="Fourteen residences. No two alike. And once they are gone, this chapter closes." data-pt="Catorze residências. Nenhuma igual. E quando se forem, este capítulo encerra-se.">Fourteen residences. No two alike. And once they are gone, this chapter closes.</p>
+      <p style="color:var(--gold); font-size:16px; line-height:2; margin-top:15px; font-weight:600;" data-en="Reach out today. Walk the site. Feel the stone, feel the breeze. Here, your story begins." data-pt="Entre em contacto hoje. Visite o local. Sinta a pedra, sinta a brisa. Aqui, a sua história começa.">Reach out today. Walk the site. Feel the stone, feel the breeze. Here, your story begins.</p>
+      <div class="contact-details">
+        <div class="cd-item"><span data-en="Email" data-pt="Email">Email</span><a href="mailto:investors@arestapt.com">investors@arestapt.com</a></div>
+        <div class="cd-item">
+          <span data-en="Phone" data-pt="Telefone">Phone</span>
+          <span>+351 933 434 501</span>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:8px;">
+            <a href="https://wa.me/351933434501" target="_blank" class="wa-icon-link" title="Message on WhatsApp">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;fill:var(--gold);display:block;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </a>
+            <span data-en="Message on WhatsApp" data-pt="Mensagem no WhatsApp" style="font-family:var(--sans);font-size:13px;font-weight:500;color:rgba(255,255,255,0.5);letter-spacing:0;text-transform:none;">Message on WhatsApp</span>
+          </div>
+        </div>
+        <div class="cd-item"><span data-en="Address" data-pt="Morada">Address</span><span>Rua do Castelo, Setúbal</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="contact-form-wrap">
+    <form class="contact-form" id="enquiryForm" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="field"><label data-en="First Name" data-pt="Nome">First Name</label><input type="text" name="first_name" required></div>
+        <div class="field"><label data-en="Last Name" data-pt="Apelido">Last Name</label><input type="text" name="last_name" required></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label data-en="Email" data-pt="Email">Email</label><input type="email" name="email" required></div>
+        <div class="field"><label data-en="Phone" data-pt="Telefone">Phone</label><input type="tel" name="phone"></div>
+      </div>
+      <div class="field">
+        <label data-en="Interested In" data-pt="Interesse em">Interested In</label>
+        <select name="typology"><option data-en="Select typology" data-pt="Selecione tipologia" value="">Select typology</option><option>Studio / Studio+</option><option>T1</option><option>T1+1 Duplex</option><option>T2 Duplex</option><option>T3 Duplex</option></select>
+      </div>
+      <div class="field"><label data-en="Message" data-pt="Mensagem">Message</label><textarea name="message"></textarea></div>
+      <div id="formMsg" style="display:none; padding:14px 0; font-size:14px; font-weight:600; letter-spacing:0.5px;"></div>
+      <button type="submit" class="submit-btn" id="submitBtn" data-en="Send Enquiry" data-pt="Enviar Consulta">Send Enquiry</button>
+    </form>
+  </div>
+</section>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/351933434501" target="_blank" class="whatsapp-float" title="WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- MOBILE STICKY ENQUIRE -->
+<div class="mobile-enquire">
+  <a href="#contact" data-en="Enquire" data-pt="Contactar">Enquire</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">Castelo</div>
+  <div class="footer-center">
+    <a href="https://www.arestapt.com/" target="_blank">Aresta Vitalicia</a>
+    <a href="https://globalnestportugal.com/" target="_blank">Global Nest</a>
+  </div>
+  <div class="footer-right">© 2026 Castelo Setúbal</div>
+</footer>
+
+<script>
+let lang='en';
+function switchLanguage(newLang){
+  lang=newLang;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`[data-lang="${newLang}"]`).classList.add('active');
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const t=lang==='en'?el.dataset.en:el.dataset.pt;
+    if(!t)return;
+    if(el.tagName==='INPUT'||el.tagName==='TEXTAREA'){
+      el.placeholder=t;
+    }else if(el.tagName==='OPTION'){
+      el.textContent=t;
+    }else if(el.children.length>0){
+      // Element has child nodes — only update if it's a pure label element (span/label)
+      if(el.tagName==='SPAN'||el.tagName==='LABEL'){el.textContent=t;}
+    }else if(t.includes('<em>')){
+      el.innerHTML=t;
+    }else{
+      el.textContent=t;
+    }
+  });
+}
+document.querySelectorAll('.lang-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>switchLanguage(btn.dataset.lang));
+});
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('visible')})},{threshold:0.12,rootMargin:'0px 0px -30px 0px'});
+reveals.forEach(el=>obs.observe(el));
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20)});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const h=a.getAttribute('href');if(h==='#')return;e.preventDefault();const el=document.querySelector(h);if(el){window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-80,behavior:'smooth'})}})});
+async function handleSubmit(e){
+  e.preventDefault();
+  const form=e.target;
+  const btn=document.getElementById('submitBtn');
+  const msg=document.getElementById('formMsg');
+  const isEN=lang==='en';
+  btn.disabled=true;
+  btn.textContent=isEN?'Sending…':'A enviar…';
+  msg.style.display='none';
+  try{
+    const data=new FormData(form);
+    data.append('_subject','New enquiry — Castelo Setúbal');
+    data.append('_captcha','false');
+    const res=await fetch('https://formsubmit.co/ajax/investors@arestapt.com',{
+      method:'POST',
+      headers:{'Accept':'application/json'},
+      body:data
+    });
+    if(res.ok){
+      msg.style.color='var(--gold)';
+      msg.textContent=isEN?'Thank you. We will be in touch shortly.':'Obrigado. Entraremos em contacto brevemente.';
+      msg.style.display='block';
+      form.reset();
+      btn.textContent=isEN?'Send Enquiry':'Enviar Consulta';
+      btn.disabled=false;
+    }else{
+      throw new Error('Server error');
+    }
+  }catch(err){
+    msg.style.color='#E88080';
+    msg.textContent=isEN?'Something went wrong. Please email us directly at investors@arestapt.com':'Ocorreu um erro. Por favor contacte-nos diretamente em investors@arestapt.com';
+    msg.style.display='block';
+    btn.textContent=isEN?'Send Enquiry':'Enviar Consulta';
+    btn.disabled=false;
+  }
+}
+
+// PDF Lightbox
+function openPlan(file){
+  const modal=document.getElementById('pdfModal');
+  const viewer=document.getElementById('pdfViewer');
+  const dl=document.getElementById('pdfDownload');
+  viewer.src=file;
+  dl.href=file;
+  modal.style.display='flex';
+  document.body.style.overflow='hidden';
+}
+function closePlan(){
+  const modal=document.getElementById('pdfModal');
+  const viewer=document.getElementById('pdfViewer');
+  viewer.src='';
+  modal.style.display='none';
+  document.body.style.overflow='';
+}
+document.getElementById('pdfModal').addEventListener('click',function(e){if(e.target===this)closePlan()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePlan()});
+</script>
+<script>
+// ─── CASTELO MAP ───
+window.addEventListener('load', function(){
+  if(typeof L === 'undefined'){ console.warn('Leaflet not loaded'); return; }
+
+  const PROJECT = [38.521583, -8.902611];
+
+  const map = L.map('castelo-map', {
+    center: [38.521583, -8.902611],
+    zoom: 14,
+    zoomControl: true,
+    scrollWheelZoom: false
+  });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: 'abcd', maxZoom: 19
+  }).addTo(map);
+
+  const casteloIcon = L.divIcon({
+    className: '',
+    html: `<div style="display:flex;flex-direction:column;align-items:center;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.3));">
+      <div style="width:62px;height:62px;background:#2C3E50;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Lobster',cursive;font-size:15px;color:white;border:2px solid rgba(200,192,180,0.5);">Castelo</div>
+      <div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:12px solid #2C3E50;margin-top:-1px;"></div>
+    </div>`,
+    iconSize:   [62, 76],
+    iconAnchor: [31, 76],
+    popupAnchor:[0, -80]
+  });
+  L.marker(PROJECT, { icon: casteloIcon }).addTo(map)
+    .bindPopup('<strong>Castelo</strong><span>Rua do Castelo, Setúbal</span>');
+
+  const pois = [
+    { color:'#B8A898', coords:[38.517806, -8.909278], name:'Historic Fortress',  desc:'Baluarte de São Francisco · 700 m',    url:'https://maps.app.goo.gl/KYeeM5r3peCLcMv88' },
+    { color:'#6CA0B5', coords:[38.519833, -8.900444], name:'Marina',             desc:'250 m from Castelo',                   url:'https://maps.app.goo.gl/5fQFYuQbCqjZWaJg6' },
+    { color:'#6CA0B5', coords:[38.518556, -8.897667], name:'Dolphin Bay',        desc:'500 m · Sado estuary dolphin tours',   url:'https://maps.app.goo.gl/Zp6pWCTyGGXJ8f3d8' },
+    { color:'#6CA0B5', coords:[38.510778, -8.915250], name:'Beach',              desc:'1,300 m from Castelo',                 url:'https://maps.app.goo.gl/BhodbJkcs7yZ5rb76' },
+    { color:'#C8C0B4', coords:[38.522500, -8.894278], name:'Market',             desc:'Mercado do Livramento · 700 m',        url:'https://maps.app.goo.gl/HV4ag2QFvJD3PzxK8' },
+    { color:'#C8C0B4', coords:[38.523333, -8.914278], name:'School',             desc:'1,000 m from Castelo',                 url:'https://maps.app.goo.gl/zQ6VsfZwnvGCiANZ6' },
+    { color:'#8FA98B', coords:[38.528333, -8.890694], name:'Bonfim Garden',      desc:'Jardim do Bonfim',                     url:'https://maps.app.goo.gl/EucXNRWzriuNWHHv5' },
+    { color:'#7A9BAB', coords:[38.521667, -8.887222], name:'Ferry to Tróia',     desc:'1,300 m · 15 min to peninsula',        url:'https://maps.app.goo.gl/DWtn5SseiwDpUdbM9' },
+    { color:'#9090B8', coords:[38.531111, -8.891222], name:'Stadium',            desc:'Estádio do Bonfim',                    url:'https://maps.app.goo.gl/kin1KBTWP1oRBg1VA' },
+    { color:'#C08080', coords:[38.529083, -8.880778], name:'Hospital',           desc:'Hospital de Setúbal',                  url:'https://maps.app.goo.gl/TdYW5qmmEQDoPnWL6' },
+  ];
+
+  pois.forEach(p => {
+    const icon = L.divIcon({
+      className: '',
+      html: `<div class="poi-pin" style="background:${p.color};" title="${p.name}"></div>`,
+      iconSize: [12, 12], iconAnchor: [6, 6], popupAnchor: [0, -10]
+    });
+    L.marker(p.coords, { icon }).addTo(map)
+      .bindPopup(`<strong>${p.name}</strong><span>${p.desc}</span><br><a href="${p.url}" target="_blank" style="font-size:11px;color:#6CA0B5;letter-spacing:1px;">Open in Maps ↗</a>`);
+  });
+});
+</script>
+</body>
+</html>
