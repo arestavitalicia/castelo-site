@@ -94,6 +94,7 @@ nav.scrolled { box-shadow:0 4px 30px rgba(0,0,0,0.06); }
 /* ─── FULL BLEED IMAGE BREAK ─── */
 .img-break {
   width:100%; display:grid; overflow:hidden;
+  gap:3px; background:var(--navy);
 }
 .img-break.duo { grid-template-columns:1fr 1fr; min-height:500px; }
 .img-break.trio { grid-template-columns:1fr 1fr 1fr; min-height:420px; }
@@ -286,6 +287,7 @@ footer { background:#111B24; padding:50px 80px; display:flex; justify-content:sp
   .hero{grid-template-columns:1fr} .hero-text{padding:80px 40px} .hero h1{font-size:52px}
   .hero-visual{min-height:350px}
   .about,.location,.contact{grid-template-columns:1fr}
+  section[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}
   .about-text,.location-content,.contact-info,.contact-form-wrap{padding:80px 40px}
   .section-pad{padding:80px 40px}
   .project-grid{grid-template-columns:1fr}
@@ -549,16 +551,17 @@ footer { background:#111B24; padding:50px 80px; display:flex; justify-content:sp
 </section>
 
 <!-- THE WALL -->
-<div style="position:relative; min-height:550px; display:flex; align-items:center; justify-content:flex-end; overflow:hidden;">
-  <div class="img-slot" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; background:url('assets/images/the%20wall.png') center/cover no-repeat;"></div>
-  <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(270deg, rgba(27,40,56,0.88) 0%, rgba(27,40,56,0.65) 45%, transparent 100%); z-index:2;"></div>
-  <div style="position:relative; z-index:3; padding:80px; max-width:550px; color:var(--white); text-align:left;" class="reveal">
-    <strong style="font-family:var(--serif); font-size:30px; display:block; margin-bottom:25px; color:var(--gold);" data-en="The Wall That Stayed" data-pt="A Muralha Que Permaneceu">The Wall That Stayed</strong>
-    <p style="font-size:16px; line-height:2; color:rgba(255,255,255,0.85); margin-bottom:15px;" data-en="In 1642, a military engineer named João Gilot drew a fortress around Setúbal. That line became stone. At the western edge, the Baluarte de São Francisco rose to guard one of Portugal's most vital ports." data-pt="Em 1642, um engenheiro militar chamado João Gilot desenhou uma fortaleza à volta de Setúbal. Essa linha tornou-se pedra. Na extremidade ocidental, o Baluarte de São Francisco ergueu-se para guardar um dos portos mais vitais de Portugal.">In 1642, a military engineer named João Gilot drew a fortress around Setúbal. That line became stone. At the western edge, the Baluarte de São Francisco rose to guard one of Portugal's most vital ports.</p>
-    <p style="font-size:16px; line-height:2; color:rgba(255,255,255,0.85); margin-bottom:15px;" data-en="Nearly four centuries later, the bastion still stands at the back of our land, silent, solid, unmoved. Earthquakes, a tsunami, and centuries of urban growth buried the old defences elsewhere. Here, the wall endured." data-pt="Quase quatro séculos depois, o baluarte ainda permanece atrás do nosso terreno, silencioso, sólido, imóvel. Terramotos, um tsunami e séculos de crescimento urbano enterraram as antigas defesas noutros locais. Aqui, a muralha resistiu.">Nearly four centuries later, the bastion still stands at the back of our land, silent, solid, unmoved. Earthquakes, a tsunami, and centuries of urban growth buried the old defences elsewhere. Here, the wall endured.</p>
-    <p style="font-size:16px; line-height:2; color:rgba(255,255,255,0.85);" data-en="Castelo is built alongside that history. The best foundations are the ones already proven by time." data-pt="O Castelo foi construído em diálogo com essa história. As melhores fundações são as que o tempo já provou.">Castelo is built alongside that history. The best foundations are the ones already proven by time.</p>
+<section style="display:grid; grid-template-columns:1fr 1fr; background:var(--white);">
+  <div class="img-slot" style="min-height:550px; background:url('assets/images/the%20wall.png') center/cover no-repeat;"></div>
+  <div class="about-text">
+    <div class="reveal">
+      <h2 class="section-title" data-en="The Wall That Stayed" data-pt="A Muralha Que Permaneceu">The Wall That Stayed</h2>
+      <p data-en="In 1642, a military engineer named João Gilot drew a fortress around Setúbal. That line became stone. At the western edge, the Baluarte de São Francisco rose to guard one of Portugal's most vital ports." data-pt="Em 1642, um engenheiro militar chamado João Gilot desenhou uma fortaleza à volta de Setúbal. Essa linha tornou-se pedra. Na extremidade ocidental, o Baluarte de São Francisco ergueu-se para guardar um dos portos mais vitais de Portugal.">In 1642, a military engineer named João Gilot drew a fortress around Setúbal. That line became stone. At the western edge, the Baluarte de São Francisco rose to guard one of Portugal's most vital ports.</p>
+      <p data-en="Nearly four centuries later, the bastion still stands at the back of our land, silent, solid, unmoved. Earthquakes, a tsunami, and centuries of urban growth buried the old defences elsewhere. Here, the wall endured." data-pt="Quase quatro séculos depois, o baluarte ainda permanece atrás do nosso terreno, silencioso, sólido, imóvel. Terramotos, um tsunami e séculos de crescimento urbano enterraram as antigas defesas noutros locais. Aqui, a muralha resistiu.">Nearly four centuries later, the bastion still stands at the back of our land, silent, solid, unmoved. Earthquakes, a tsunami, and centuries of urban growth buried the old defences elsewhere. Here, the wall endured.</p>
+      <p data-en="Castelo is built alongside that history. The best foundations are the ones already proven by time." data-pt="O Castelo foi construído em diálogo com essa história. As melhores fundações são as que o tempo já provou.">Castelo is built alongside that history. The best foundations are the ones already proven by time.</p>
+    </div>
   </div>
-</div>
+</section>
 
 <!-- VIDEO / 3D BACKGROUND -->
 <section class="media-section" style="position:relative; min-height:600px; display:flex; align-items:center; justify-content:center; overflow:hidden; padding:0;">
