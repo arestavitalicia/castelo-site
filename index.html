@@ -70,7 +70,7 @@ nav.scrolled { box-shadow:0 4px 30px rgba(0,0,0,0.06); }
 .hero-actions { display:flex; gap:20px; opacity:0; animation:fadeUp .8s .9s forwards; }
 .hero-visual {
   position:relative; overflow:hidden;
-  background:url('hero.jpg') center/cover no-repeat;
+  background:url('assets/images/hero.jpg') center/cover no-repeat;
   display:flex; align-items:center; justify-content:center;
 }
 .img-placeholder {
@@ -401,7 +401,7 @@ footer { background:#111B24; padding:50px 80px; display:flex; justify-content:sp
     <p class="hero-sub" data-en="Some addresses are found. Others have been waiting centuries to be discovered. On a street still named for the fortress that once guarded this coast, fourteen residences rise from stone that remembers." data-pt="Alguns endereços encontram-se. Outros estiveram séculos à espera de ser descobertos. Numa rua que ainda leva o nome da fortaleza que outrora guardava esta costa, catorze residências erguem-se de pedra que se lembra.">Some addresses are found. Others have been waiting centuries to be discovered. On a street still named for the fortress that once guarded this coast, fourteen residences rise from stone that remembers.</p>
     <div class="hero-actions">
       <a href="#apartments" class="btn-gold" data-en="Explore Residences" data-pt="Explorar Residências">Explore Residences</a>
-      <a href="project_plans.pdf" download class="btn-outline" data-en="Download Brochure" data-pt="Descarregar Brochura">Download Brochure</a>
+      <a href="assets/pdfs/project_plans.pdf" download class="btn-outline" data-en="Download Brochure" data-pt="Descarregar Brochura">Download Brochure</a>
     </div>
   </div>
   <div class="hero-visual">
@@ -439,20 +439,20 @@ footer { background:#111B24; padding:50px 80px; display:flex; justify-content:sp
         <th data-en="Real" data-pt="Real">Real</th>
       </tr></thead>
       <tbody>
-        <tr><td class="apt-name">01</td><td class="apt-building">A</td><td>0</td><td><span class="apt-badge">Studio+</span></td><td>84 m²</td><td>—</td><td>—</td><td><button class="apt-dl" onclick="openPlan('ap1.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td><a href="https://reals.simplex3d.com/real/6a0dc2244a6cf570888fc069" target="_blank" class="apt-real" title="3D Virtual Tour">👁</a></td></tr>
-        <tr><td class="apt-name">02</td><td class="apt-building">A</td><td>1</td><td><span class="apt-badge">T1</span></td><td>71 m²</td><td>—</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap2.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td><a href="https://reals.simplex3d.com/real/6a0dc5854a6cf570888fc07d" target="_blank" class="apt-real" title="3D Virtual Tour">👁</a></td></tr>
-        <tr class="apt-featured"><td class="apt-name">03</td><td class="apt-building">A</td><td>2–3</td><td><span class="apt-badge duplex">T2 Duplex</span> <span class="apt-badge seaview">Sea View</span></td><td>138 m²</td><td>4 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap3.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td><a href="https://reals.simplex3d.com/real/6a0dc6394a6cf570888fc091" target="_blank" class="apt-real" title="3D Virtual Tour">👁</a></td></tr>
-        <tr><td class="apt-name">04</td><td class="apt-building">B</td><td>1</td><td><span class="apt-badge">Studio</span></td><td>37 m²</td><td>—</td><td>—</td><td><button class="apt-dl" onclick="openPlan('ap4.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td><a href="https://reals.simplex3d.com/real/6a0dc60e4a6cf570888fc087" target="_blank" class="apt-real" title="3D Virtual Tour">👁</a></td></tr>
-        <tr><td class="apt-name">05</td><td class="apt-building">B</td><td>1</td><td><span class="apt-badge">Studio+</span></td><td>41 m²</td><td>6 m²</td><td>—</td><td><button class="apt-dl" onclick="openPlan('ap5.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
-        <tr><td class="apt-name">06</td><td class="apt-building">B</td><td>1</td><td><span class="apt-badge">Studio+</span></td><td>42 m²</td><td>—</td><td>—</td><td><button class="apt-dl" onclick="openPlan('ap6.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
-        <tr><td class="apt-name">07</td><td class="apt-building">B</td><td>2</td><td><span class="apt-badge">Studio+</span></td><td>41 m²</td><td>12 m²</td><td>—</td><td><button class="apt-dl" onclick="openPlan('ap7.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
-        <tr class="apt-featured"><td class="apt-name">08</td><td class="apt-building">B</td><td>2–3</td><td><span class="apt-badge duplex">T3 Duplex</span> <span class="apt-badge crown">Crown</span></td><td>147 m²</td><td>11 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap8.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
-        <tr><td class="apt-name">09</td><td class="apt-building">B</td><td>2–3</td><td><span class="apt-badge duplex">T1+1 Duplex</span></td><td>70 m²</td><td>8 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap9.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
-        <tr><td class="apt-name">10</td><td class="apt-building">C</td><td>1</td><td><span class="apt-badge">T1</span></td><td>58 m²</td><td>—</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap10.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
-        <tr><td class="apt-name">11</td><td class="apt-building">C</td><td>1</td><td><span class="apt-badge">T1</span></td><td>61 m²</td><td>4 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap11.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
-        <tr><td class="apt-name">12</td><td class="apt-building">C</td><td>2–3</td><td><span class="apt-badge duplex">T1+1 Duplex</span></td><td>100 m²</td><td>1 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap12.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
-        <tr><td class="apt-name">13</td><td class="apt-building">C</td><td>2–3</td><td><span class="apt-badge duplex">T2 Duplex</span></td><td>118 m²</td><td>14 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap13.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
-        <tr><td class="apt-name">14</td><td class="apt-building">C</td><td>2–3</td><td><span class="apt-badge duplex">T2 Duplex</span></td><td>114 m²</td><td>13 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('ap14.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr><td class="apt-name">01</td><td class="apt-building">A</td><td>0</td><td><span class="apt-badge">Studio+</span></td><td>84 m²</td><td>—</td><td>—</td><td><button class="apt-dl" onclick="openPlan('assets/pdfs/ap1.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td><a href="https://reals.simplex3d.com/real/6a0dc2244a6cf570888fc069" target="_blank" class="apt-real" title="3D Virtual Tour">👁</a></td></tr>
+        <tr><td class="apt-name">02</td><td class="apt-building">A</td><td>1</td><td><span class="apt-badge">T1</span></td><td>71 m²</td><td>—</td><td>1</td><td><button class="apt-dl" onclick="openPlan('assets/pdfs/ap2.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td><a href="https://reals.simplex3d.com/real/6a0dc5854a6cf570888fc07d" target="_blank" class="apt-real" title="3D Virtual Tour">👁</a></td></tr>
+        <tr class="apt-featured"><td class="apt-name">03</td><td class="apt-building">A</td><td>2–3</td><td><span class="apt-badge duplex">T2 Duplex</span> <span class="apt-badge seaview">Sea View</span></td><td>138 m²</td><td>4 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('assets/pdfs/ap3.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td><a href="https://reals.simplex3d.com/real/6a0dc6394a6cf570888fc091" target="_blank" class="apt-real" title="3D Virtual Tour">👁</a></td></tr>
+        <tr><td class="apt-name">04</td><td class="apt-building">B</td><td>1</td><td><span class="apt-badge">Studio</span></td><td>37 m²</td><td>—</td><td>—</td><td><button class="apt-dl" onclick="openPlan('assets/pdfs/ap4.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td><a href="https://reals.simplex3d.com/real/6a0dc60e4a6cf570888fc087" target="_blank" class="apt-real" title="3D Virtual Tour">👁</a></td></tr>
+        <tr><td class="apt-name">05</td><td class="apt-building">B</td><td>1</td><td><span class="apt-badge">Studio+</span></td><td>41 m²</td><td>6 m²</td><td>—</td><td><button class="apt-dl" onclick="openPlan('assets/pdfs/ap5.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr><td class="apt-name">06</td><td class="apt-building">B</td><td>1</td><td><span class="apt-badge">Studio+</span></td><td>42 m²</td><td>—</td><td>—</td><td><button class="apt-dl" onclick="openPlan('assets/pdfs/ap6.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr><td class="apt-name">07</td><td class="apt-building">B</td><td>2</td><td><span class="apt-badge">Studio+</span></td><td>41 m²</td><td>12 m²</td><td>—</td><td><button class="apt-dl" onclick="openPlan('assets/pdfs/ap7.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr class="apt-featured"><td class="apt-name">08</td><td class="apt-building">B</td><td>2–3</td><td><span class="apt-badge duplex">T3 Duplex</span> <span class="apt-badge crown">Crown</span></td><td>147 m²</td><td>11 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('assets/pdfs/ap8.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr><td class="apt-name">09</td><td class="apt-building">B</td><td>2–3</td><td><span class="apt-badge duplex">T1+1 Duplex</span></td><td>70 m²</td><td>8 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('assets/pdfs/ap9.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr><td class="apt-name">10</td><td class="apt-building">C</td><td>1</td><td><span class="apt-badge">T1</span></td><td>58 m²</td><td>—</td><td>1</td><td><button class="apt-dl" onclick="openPlan('assets/pdfs/ap10.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr><td class="apt-name">11</td><td class="apt-building">C</td><td>1</td><td><span class="apt-badge">T1</span></td><td>61 m²</td><td>4 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('assets/pdfs/ap11.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr><td class="apt-name">12</td><td class="apt-building">C</td><td>2–3</td><td><span class="apt-badge duplex">T1+1 Duplex</span></td><td>100 m²</td><td>1 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('assets/pdfs/ap12.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr><td class="apt-name">13</td><td class="apt-building">C</td><td>2–3</td><td><span class="apt-badge duplex">T2 Duplex</span></td><td>118 m²</td><td>14 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('assets/pdfs/ap13.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
+        <tr><td class="apt-name">14</td><td class="apt-building">C</td><td>2–3</td><td><span class="apt-badge duplex">T2 Duplex</span></td><td>114 m²</td><td>13 m²</td><td>1</td><td><button class="apt-dl" onclick="openPlan('assets/pdfs/ap14.pdf')" data-en="↓ Plan" data-pt="↓ Planta">↓ Plan</button></td><td></td></tr>
       </tbody>
     </table>
   </div>
@@ -460,7 +460,7 @@ footer { background:#111B24; padding:50px 80px; display:flex; justify-content:sp
   <!-- Project Plans Bar -->
   <div style="margin-top:60px; display:flex; gap:20px; flex-wrap:wrap;" class="reveal">
     <a href="#" onclick="openPlan('project_plans.pdf'); return false;" class="btn-gold" style="flex:1; text-align:center; min-width:200px;" data-en="View Full Project Plans" data-pt="Ver Todos os Planos do Projeto">View Full Project Plans</a>
-    <a href="project_plans.pdf" download class="btn-gold" style="flex:1; text-align:center; min-width:200px; background:var(--navy); color:var(--white);" data-en="↓ Download Project PDF" data-pt="↓ Descarregar PDF do Projeto">↓ Download Project PDF</a>
+    <a href="assets/pdfs/project_plans.pdf" download class="btn-gold" style="flex:1; text-align:center; min-width:200px; background:var(--navy); color:var(--white);" data-en="↓ Download Project PDF" data-pt="↓ Descarregar PDF do Projeto">↓ Download Project PDF</a>
     <a href="#" target="_blank" class="btn-gold" style="flex:1; text-align:center; min-width:200px; background:transparent; color:var(--navy); border:1px solid var(--border);" data-en="👁 Full Project Real" data-pt="👁 Real Completo do Projeto">👁 Full Project Real</a>
   </div>
 </section>
@@ -494,14 +494,14 @@ footer { background:#111B24; padding:50px 80px; display:flex; justify-content:sp
         <p data-en="The architecture speaks the language of the street: traditional volumes, honest materials. Behind the façade, everything is new and built for a life well lived." data-pt="A arquitetura fala a linguagem da rua: volumes tradicionais, materiais honestos. Por detrás da fachada, tudo é novo e construído para uma vida bem vivida.">The architecture speaks the language of the street: traditional volumes, honest materials. Behind the façade, everything is new and built for a life well lived.</p>
       </div>
     </div>
-    <div class="project-visual reveal" style="background:url('ext1.jpg') center/cover no-repeat;"></div>
+    <div class="project-visual reveal" style="background:url('assets/images/ext1.jpg') center/cover no-repeat;"></div>
   </div>
 </section>
 
 <!-- IMAGE BREAK 3 — Interiors duo -->
 <div class="img-break duo">
-  <div class="img-slot" style="background:url('interior1.png') center/cover no-repeat;"></div>
-  <div class="img-slot" style="background:url('interior3.png') center/cover no-repeat;"></div>
+  <div class="img-slot" style="background:url('assets/images/interior1.png') center/cover no-repeat;"></div>
+  <div class="img-slot" style="background:url('assets/images/interior3.png') center/cover no-repeat;"></div>
 </div>
 
 <!-- LOCATION -->
@@ -530,9 +530,9 @@ footer { background:#111B24; padding:50px 80px; display:flex; justify-content:sp
 
 <!-- IMAGE BREAK 1 — Setúbal lifestyle -->
 <div class="img-break trio">
-  <div class="img-slot" style="background:url('jonas-von-werne-dolphins-unsplash.jpg') center/cover no-repeat;"></div>
-  <div class="img-slot" style="background:url('street2.png') center/cover no-repeat;"></div>
-  <div class="img-slot" style="background:url('couple%20in%20restaurante.png') center/cover no-repeat;"></div>
+  <div class="img-slot" style="background:url('assets/images/jonas-von-werne-dolphins-unsplash.jpg') center/cover no-repeat;"></div>
+  <div class="img-slot" style="background:url('assets/images/street2.png') center/cover no-repeat;"></div>
+  <div class="img-slot" style="background:url('assets/images/couple%20in%20restaurante.png') center/cover no-repeat;"></div>
 </div>
 
 <!-- ABOUT SETÚBAL -->
@@ -545,12 +545,12 @@ footer { background:#111B24; padding:50px 80px; display:flex; justify-content:sp
       <p data-en="A place that earns your attention quietly and keeps it forever." data-pt="Um lugar que conquista a sua atenção em silêncio e a mantém para sempre.">A place that earns your attention quietly and keeps it forever.</p>
     </div>
   </div>
-  <div class="img-slot" style="min-height:550px; background:url('alexandre-contador-seaview-unsplash.jpg') center/cover no-repeat;"></div>
+  <div class="img-slot" style="min-height:550px; background:url('assets/images/alexandre-contador-seaview-unsplash.jpg') center/cover no-repeat;"></div>
 </section>
 
 <!-- THE WALL -->
 <div style="position:relative; min-height:550px; display:flex; align-items:center; justify-content:flex-end; overflow:hidden;">
-  <div class="img-slot" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; background:url('the%20wall.png') center/cover no-repeat;"></div>
+  <div class="img-slot" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; background:url('assets/images/the%20wall.png') center/cover no-repeat;"></div>
   <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(270deg, rgba(27,40,56,0.88) 0%, rgba(27,40,56,0.65) 45%, transparent 100%); z-index:2;"></div>
   <div style="position:relative; z-index:3; padding:80px; max-width:550px; color:var(--white); text-align:left;" class="reveal">
     <strong style="font-family:var(--serif); font-size:30px; display:block; margin-bottom:25px; color:var(--gold);" data-en="The Wall That Stayed" data-pt="A Muralha Que Permaneceu">The Wall That Stayed</strong>
@@ -562,21 +562,21 @@ footer { background:#111B24; padding:50px 80px; display:flex; justify-content:sp
 
 <!-- VIDEO / 3D BACKGROUND -->
 <section class="media-section" style="position:relative; min-height:600px; display:flex; align-items:center; justify-content:center; overflow:hidden; padding:0;">
-  <video autoplay muted loop poster="ext1.jpg" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
-    <source src="castelofly.mp4" type="video/mp4">
+  <video autoplay muted loop poster="assets/images/ext1.jpg" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+    <source src="assets/video/castelofly.mp4" type="video/mp4">
   </video>
 </section>
 
 <!-- IMAGE BREAK 4 — Bedrooms + bathroom -->
 <div class="img-break trio">
-  <div class="img-slot" style="background:url('interior4.png') center/cover no-repeat;"></div>
-  <div class="img-slot" style="background:url('interior5.png') center/cover no-repeat;"></div>
-  <div class="img-slot" style="background:url('interior2.png') center/cover no-repeat;"></div>
+  <div class="img-slot" style="background:url('assets/images/interior4.png') center/cover no-repeat;"></div>
+  <div class="img-slot" style="background:url('assets/images/interior5.png') center/cover no-repeat;"></div>
+  <div class="img-slot" style="background:url('assets/images/interior2.png') center/cover no-repeat;"></div>
 </div>
 
 <!-- IMAGE BREAK 5 — Final exterior -->
 <div class="img-break solo">
-  <div class="img-slot" style="width:100%; background:url('ext2.png') center/cover no-repeat; min-height:550px;"></div>
+  <div class="img-slot" style="width:100%; background:url('assets/images/ext2.png') center/cover no-repeat; min-height:550px;"></div>
 </div>
 
 <!-- TEAM (compact strip) -->
@@ -585,15 +585,15 @@ footer { background:#111B24; padding:50px 80px; display:flex; justify-content:sp
     <span class="team-strip-label" data-en="A project by" data-pt="Um projeto de">A project by</span>
     <div class="team-logos-row">
       <a href="https://www.arestapt.com/" target="_blank" class="team-logo-box">
-        <div class="team-logo-img" style="background:url('aresta_logo.png') center/contain no-repeat; color:transparent;">ARESTA</div>
+        <div class="team-logo-img" style="background:url('assets/images/aresta_logo.png') center/contain no-repeat; color:transparent;">ARESTA</div>
         <span class="team-logo-caption" data-en="Developer" data-pt="Promotor">Developer</span>
       </a>
       <a href="https://globalnestportugal.com/about" target="_blank" class="team-logo-box">
-        <div class="team-logo-img" style="background:url('nest_logo.jpeg') center/contain no-repeat; color:transparent;">GLOBAL NEST</div>
+        <div class="team-logo-img" style="background:url('assets/images/nest_logo.jpeg') center/contain no-repeat; color:transparent;">GLOBAL NEST</div>
         <span class="team-logo-caption" data-en="Developer" data-pt="Promotor">Developer</span>
       </a>
       <span class="team-logo-box" style="cursor:default;">
-        <div class="team-logo-img" style="background:url('maven_logo.jpg') center/contain no-repeat; color:transparent;">MAVEN</div>
+        <div class="team-logo-img" style="background:url('assets/images/maven_logo.jpg') center/contain no-repeat; color:transparent;">MAVEN</div>
         <span class="team-logo-caption" data-en="Project Management" data-pt="Gestão de Projeto">Project Management</span>
       </span>
     </div>
