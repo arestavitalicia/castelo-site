@@ -80,9 +80,9 @@ nav.scrolled { box-shadow:0 4px 30px rgba(0,0,0,0.06); }
 .img-placeholder .ph-icon { font-size:48px; display:block; margin-bottom:14px; opacity:0.4; }
 
 /* ─── BUTTONS ─── */
-.btn-gold { padding:16px 40px; background:var(--gold); color:var(--navy); font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; border:none; cursor:pointer; transition:all .4s; text-decoration:none; display:inline-block; }
+.btn-gold { padding:16px 40px; background:var(--gold); color:var(--navy); font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; border:none; cursor:pointer; transition:all .4s; text-decoration:none; display:inline-block; text-align:center; }
 .btn-gold:hover { background:var(--gold-light); transform:translateY(-2px); box-shadow:0 10px 30px rgba(200,192,180,0.3); }
-.btn-outline { padding:16px 40px; background:transparent; color:var(--white); border:1px solid rgba(255,255,255,0.3); font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; cursor:pointer; transition:all .3s; text-decoration:none; display:inline-block; }
+.btn-outline { padding:16px 40px; background:transparent; color:var(--white); border:1px solid rgba(255,255,255,0.3); font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; cursor:pointer; transition:all .3s; text-decoration:none; display:inline-block; text-align:center; }
 .btn-outline:hover { background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.6); }
 
 @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
@@ -178,9 +178,10 @@ nav.scrolled { box-shadow:0 4px 30px rgba(0,0,0,0.06); }
 }
 .location-content { padding:120px 80px; display:flex; flex-direction:column; justify-content:center; }
 .loc-grid { display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-top:50px; }
-.loc-item { padding-left:20px; border-left:2px solid var(--gold); }
+.loc-item { padding-left:20px; border-left:2px solid var(--gold); display:flex; align-items:center; gap:12px; }
 .loc-item strong { display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:4px; }
 .loc-item span { font-size:13px; color:var(--text-muted); }
+.loc-icon { flex-shrink:0; width:36px; height:36px; opacity:0.75; }
 
 /* ─── VIDEO / 3D ─── */
 .media-section { background:var(--navy-deep); padding:120px 80px; text-align:center; color:var(--white); }
@@ -271,7 +272,7 @@ nav.scrolled { box-shadow:0 4px 30px rgba(0,0,0,0.06); }
 .field input::placeholder,.field textarea::placeholder { color:rgba(255,255,255,0.2); }
 .field input:focus,.field textarea:focus,.field select:focus { border-bottom-color:var(--gold); }
 .field textarea { min-height:80px; resize:vertical; }
-.submit-btn { margin-top:20px; align-self:flex-start; padding:18px 50px; background:var(--gold); color:var(--navy); font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; border:none; cursor:pointer; transition:all .4s; }
+.submit-btn { margin-top:20px; align-self:flex-start; padding:18px 50px; background:var(--gold); color:var(--navy); font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; border:none; cursor:pointer; transition:all .4s; text-align:center; }
 .submit-btn:hover { background:var(--gold-light); transform:translateY(-2px); box-shadow:0 10px 30px rgba(200,192,180,0.3); }
 
 /* ─── FOOTER ─── */
@@ -410,11 +411,6 @@ footer { background:#111B24; padding:50px 80px; display:flex; justify-content:sp
   </div>
 </section>
 
-<!-- TAGLINE -->
-<div class="tagline reveal">
-  <h2 data-en="Where what was meets what is about to be." data-pt="Onde o que foi encontra o que está para ser.">Where what was meets what is about to be.</h2>
-</div>
-
 <!-- APARTMENTS TABLE -->
 <section id="apartments" class="apartments section-pad">
   <div class="section-header reveal">
@@ -515,16 +511,16 @@ footer { background:#111B24; padding:50px 80px; display:flex; justify-content:sp
     <div class="reveal">
       <h2 class="section-title" data-en="Everything Within Reach" data-pt="Tudo ao Seu Alcance">Everything Within Reach</h2>
       <div class="loc-grid">
-        <div class="loc-item"><strong data-en="Sea" data-pt="Mar">Sea</strong><span>500 m</span></div>
-        <div class="loc-item"><strong data-en="Marina" data-pt="Marina">Marina</strong><span>250 m</span></div>
-        <div class="loc-item"><strong data-en="Dolphin Bay" data-pt="Baía dos Golfinhos">Dolphin Bay</strong><span>500 m</span></div>
-        <div class="loc-item"><strong data-en="Market" data-pt="Mercado">Market</strong><span>700 m</span></div>
-        <div class="loc-item"><strong data-en="Historic Fortress" data-pt="Fortaleza Histórica">Historic Fortress</strong><span>700 m</span></div>
-        <div class="loc-item"><strong data-en="School" data-pt="Escola">School</strong><span>1,000 m</span></div>
-        <div class="loc-item"><strong data-en="Beach" data-pt="Praia">Beach</strong><span>1,300 m</span></div>
-        <div class="loc-item"><strong data-en="Ferry to Tróia" data-pt="Ferry para Tróia">Ferry to Tróia</strong><span>1,300 m</span></div>
-        <div class="loc-item"><strong data-en="Train Station" data-pt="Estação de Comboios">Train Station</strong><span>1,400 m</span></div>
-        <div class="loc-item"><strong data-en="Lisbon" data-pt="Lisboa">Lisbon</strong><span data-en="30 min" data-pt="30 min">30 min</span></div>
+        <div class="loc-item"><img class="loc-icon" src="assets/images/icon_sea.png" alt=""><div><strong data-en="Sea" data-pt="Mar">Sea</strong><span>500 m</span></div></div>
+        <div class="loc-item"><img class="loc-icon" src="assets/images/icon_marina.png" alt=""><div><strong data-en="Marina" data-pt="Marina">Marina</strong><span>250 m</span></div></div>
+        <div class="loc-item"><img class="loc-icon" src="assets/images/icon_dolphin.png" alt=""><div><strong data-en="Dolphin Bay" data-pt="Baía dos Golfinhos">Dolphin Bay</strong><span>500 m</span></div></div>
+        <div class="loc-item"><img class="loc-icon" src="assets/images/icon_market.png" alt=""><div><strong data-en="Market" data-pt="Mercado">Market</strong><span>700 m</span></div></div>
+        <div class="loc-item"><img class="loc-icon" src="assets/images/icon_fortress.png" alt=""><div><strong data-en="Historic Fortress" data-pt="Fortaleza Histórica">Historic Fortress</strong><span>700 m</span></div></div>
+        <div class="loc-item"><img class="loc-icon" src="assets/images/icon_school.png" alt=""><div><strong data-en="School" data-pt="Escola">School</strong><span>1,000 m</span></div></div>
+        <div class="loc-item"><img class="loc-icon" src="assets/images/icon_beach.png" alt=""><div><strong data-en="Beach" data-pt="Praia">Beach</strong><span>1,300 m</span></div></div>
+        <div class="loc-item"><img class="loc-icon" src="assets/images/icon_ferry.png" alt=""><div><strong data-en="Ferry to Tróia" data-pt="Ferry para Tróia">Ferry to Tróia</strong><span>1,300 m</span></div></div>
+        <div class="loc-item"><img class="loc-icon" src="assets/images/icon_train.png" alt=""><div><strong data-en="Train Station" data-pt="Estação de Comboios">Train Station</strong><span>1,400 m</span></div></div>
+        <div class="loc-item"><div><strong data-en="Lisbon" data-pt="Lisboa">Lisbon</strong><span data-en="30 min" data-pt="30 min">30 min</span></div></div>
       </div>
     </div>
   </div>
@@ -607,21 +603,13 @@ footer { background:#111B24; padding:50px 80px; display:flex; justify-content:sp
 <section id="contact" class="contact">
   <div class="contact-info">
     <div class="reveal">
-      <h2 class="section-title" style="color:var(--white);" data-en="The Next Chapter" data-pt="O Próximo Capítulo">The Next Chapter</h2>
-      <p style="color:rgba(255,255,255,0.7); font-size:16px; line-height:2; margin-top:25px;" data-en="Where the sea finds its way through stone streets, where history is a neighbour, and where the best of Portugal is right outside your door." data-pt="Onde o mar encontra o seu caminho pelas ruas de pedra, onde a história é uma vizinha, e onde o melhor de Portugal está mesmo à sua porta.">Where the sea finds its way through stone streets, where history is a neighbour, and where the best of Portugal is right outside your door.</p>
-      <p style="color:rgba(255,255,255,0.7); font-size:16px; line-height:2; margin-top:15px;" data-en="Fourteen residences. No two alike. And once they are gone, this chapter closes." data-pt="Catorze residências. Nenhuma igual. E quando se forem, este capítulo encerra-se.">Fourteen residences. No two alike. And once they are gone, this chapter closes.</p>
-      <p style="color:var(--gold); font-size:16px; line-height:2; margin-top:15px; font-weight:600;" data-en="Reach out today. Walk the site. Feel the stone, feel the breeze. Here, your story begins." data-pt="Entre em contacto hoje. Visite o local. Sinta a pedra, sinta a brisa. Aqui, a sua história começa.">Reach out today. Walk the site. Feel the stone, feel the breeze. Here, your story begins.</p>
+      <h2 class="section-title" style="color:var(--white);" data-en="Get in Touch." data-pt="Entre em Contacto.">Get in Touch.</h2>
+      <p style="color:rgba(255,255,255,0.8); font-size:17px; line-height:2; margin-top:25px;" data-en="For more information, contact us." data-pt="Para mais informações, contacte-nos.">For more information, contact us.</p>
       <div class="contact-details">
         <div class="cd-item"><span data-en="Email" data-pt="Email">Email</span><a href="mailto:investors@arestapt.com">investors@arestapt.com</a></div>
         <div class="cd-item">
           <span data-en="Phone" data-pt="Telefone">Phone</span>
           <span>+351 933 434 501</span>
-          <div style="display:flex;align-items:center;gap:10px;margin-top:8px;">
-            <a href="https://wa.me/351933434501" target="_blank" class="wa-icon-link" title="Message on WhatsApp">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;fill:var(--gold);display:block;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            </a>
-            <span data-en="Message on WhatsApp" data-pt="Mensagem no WhatsApp" style="font-family:var(--sans);font-size:13px;font-weight:500;color:rgba(255,255,255,0.5);letter-spacing:0;text-transform:none;">Message on WhatsApp</span>
-          </div>
         </div>
         <div class="cd-item"><span data-en="Address" data-pt="Morada">Address</span><span>Rua do Castelo, Setúbal</span></div>
       </div>
