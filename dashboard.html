@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Castelo Setúbal — Investor Update | Aresta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#2C3E50;--navy-deep:#22303d;--navy-soft:#34495e;
+  --ivory:#C8C0B4;--ivory-dim:#9aa3ab;--white:#ffffff;
+  --accent:#1A6FE8;--accent-soft:#5BA3F5;
+  --done:#3FB58F;--progress:#1A6FE8;--planned:#5a6b7a;
+  --line:rgba(200,192,180,0.16);--card:#2f4254;
+  --font-display:'Oswald',sans-serif;--font-body:'Schibsted Grotesk',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--ivory);font-family:var(--font-body);line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+h1,h2,h3,.kpi-val{font-family:var(--font-display);font-weight:500;letter-spacing:.5px}
+.tab-num{font-variant-numeric:tabular-nums}
+header{position:sticky;top:0;z-index:20;background:rgba(34,48,61,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.head-row{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;gap:16px;flex-wrap:wrap}
+.logos{display:flex;align-items:center;gap:20px}
+.logos img{height:28px;width:auto}
+.lf{color:var(--ivory);font-family:var(--font-display);letter-spacing:1px;font-size:.8rem;text-transform:uppercase}
+.nav{display:flex;align-items:center;gap:16px}
+.navbtn{font-family:var(--font-display);text-transform:uppercase;letter-spacing:1px;font-size:.76rem;color:var(--ivory);border:1px solid var(--line);padding:7px 16px;border-radius:20px;text-decoration:none;transition:border-color .2s,color .2s}
+.navbtn:hover{border-color:var(--accent);color:#fff}
+.who{font-family:var(--font-display);text-transform:uppercase;letter-spacing:1px;font-size:.74rem;color:var(--ivory-dim);margin-right:2px}
+.snap{font-size:.78rem;color:var(--ivory-dim);letter-spacing:.5px}
+.hero{padding:54px 0 30px}
+.eyebrow{font-family:var(--font-display);text-transform:uppercase;letter-spacing:4px;font-size:.8rem;color:var(--accent-soft);font-weight:500}
+.castelo-logo{max-height:96px;width:auto;margin:8px 0 8px}
+.promoted{color:var(--accent-soft);font-size:.95rem;margin:0 0 6px}
+.hero p{max-width:620px;color:var(--ivory);font-size:1.02rem}
+section.block{padding:30px 0;border-top:1px solid var(--line);margin-top:30px}
+.block h2{font-size:1.5rem;color:var(--white);text-transform:uppercase;letter-spacing:1.5px;font-weight:500;margin-bottom:4px}
+.block .hint{color:var(--ivory-dim);font-size:.86rem;margin-bottom:22px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px}
+.grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:26px}
+.bar{height:14px;background:var(--navy-deep);border-radius:8px;overflow:hidden}
+.bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-soft));border-radius:8px;transition:width .6s ease}
+.legend-row{display:flex;gap:18px;margin-top:16px;flex-wrap:wrap;font-size:.84rem;color:var(--ivory)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.brow{margin-bottom:18px}
+.brow .blab{display:flex;justify-content:space-between;font-size:.88rem;margin-bottom:6px}
+.brow .blab b{color:var(--white);font-weight:500}
+.brow .blab .v{color:var(--ivory-dim);font-variant-numeric:tabular-nums}
+.track{position:relative;height:22px;background:var(--navy-deep);border-radius:6px;overflow:hidden}
+.track .plan{position:absolute;inset:0;background:rgba(91,163,245,.18)}
+.track .act{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--accent),var(--accent-soft))}
+.cf{display:flex;align-items:flex-end;gap:10px;height:200px;padding-top:10px}
+.cf .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end}
+.cf .pair{display:flex;gap:3px;align-items:flex-end;height:100%;width:100%;justify-content:center}
+.cf .b{width:42%;border-radius:3px 3px 0 0;min-height:2px}
+.cf .b.inc{background:var(--done)} .cf .b.spd{background:var(--accent)}
+.cf .m{font-size:.66rem;color:var(--ivory-dim);white-space:nowrap}
+.gantt{margin-top:8px}
+.ghead{position:relative;height:20px;margin-left:200px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.gyear{position:absolute;top:0;font-size:.7rem;color:var(--ivory-dim);transform:translateX(-50%);font-family:var(--font-display);letter-spacing:1px}
+.grow{display:flex;align-items:center;height:38px}
+.gname{width:200px;flex:none;font-size:.9rem;color:var(--ivory);padding-right:14px}
+.gtrack{position:relative;flex:1;height:100%}
+.gbar{position:absolute;top:8px;height:20px;border-radius:5px;display:flex;align-items:center;padding:0 8px;font-size:.7rem;color:#fff;white-space:nowrap;overflow:hidden}
+.gbar.done{background:var(--done)} .gbar.progress{background:var(--progress)} .gbar.planned{background:var(--planned)}
+.nowline{position:absolute;top:-26px;bottom:0;width:2px;background:#e74c3c;z-index:5}
+.nowline:before{content:'now';position:absolute;top:-14px;left:-12px;font-size:.6rem;color:#e74c3c;font-family:var(--font-display);letter-spacing:1px}
+.units{display:flex;flex-direction:column;gap:22px;margin-top:4px}
+.blocklabel{font-family:var(--font-display);text-transform:uppercase;letter-spacing:2.5px;font-size:.74rem;color:var(--accent-soft);margin-bottom:11px;display:flex;align-items:center;gap:12px}
+.blocklabel:after{content:'';flex:1;height:1px;background:var(--line)}
+.blockgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:9px}
+.ucard{background:var(--navy-deep);border:1px solid var(--line);border-radius:9px;padding:9px 10px 10px;min-height:84px;display:flex;flex-direction:column;transition:border-color .2s,transform .2s}
+.ucard:hover{border-color:rgba(91,163,245,.5);transform:translateY(-2px)}
+.ucard .utop{display:flex;justify-content:space-between;align-items:flex-start;gap:6px}
+.ucard .un{font-family:var(--font-display);font-weight:600;font-size:.92rem;color:var(--white);line-height:1}
+.ucard .umeta{font-size:.66rem;color:var(--ivory-dim);margin-top:5px;letter-spacing:.2px}
+.ucard .uprice{font-family:var(--font-display);font-weight:500;font-size:.9rem;color:var(--white);margin-top:auto;padding-top:10px}
+.ucard.sold{background:var(--done);border-color:transparent}
+.ucard.sold:hover{border-color:transparent}
+.ucard.sold .un{color:#0c2a20}
+.ucard.sold .umeta{color:rgba(12,42,32,.78)}
+.ucard.sold .ulist{font-size:.64rem;color:rgba(12,42,32,.55);margin-top:auto;padding-top:8px;text-decoration:line-through}
+.ucard.sold .uprice{color:#0c2a20;margin-top:0;padding-top:0}
+.ucard.reserved{background:rgba(91,163,245,.18);border-color:rgba(91,163,245,.4)}
+.ucard.reserved .un{color:#fff}
+.utag{font-family:var(--font-display);font-size:.52rem;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;border-radius:9px;background:rgba(0,0,0,.18);color:#0c2a20;white-space:nowrap}
+.utag.res{background:rgba(91,163,245,.4);color:#fff}
+.lscroll{max-height:340px;overflow:auto}
+.ltable{width:100%;border-collapse:collapse;font-size:.88rem}
+.ltable th{position:sticky;top:0;background:var(--card);text-align:left;color:var(--ivory-dim);font-family:var(--font-display);font-weight:500;text-transform:uppercase;letter-spacing:.5px;font-size:.7rem;padding:8px 10px;border-bottom:1px solid var(--line)}
+.ltable td{padding:9px 10px;border-bottom:1px solid rgba(200,192,180,.07);color:var(--ivory)}
+.ltable td.amt,.ltable th.amt{text-align:right;font-variant-numeric:tabular-nums}
+.ltable tr.total td{border-top:2px solid var(--line);color:var(--white);font-weight:700;padding-top:12px}
+.ltable tr.total td.amt{color:var(--done)}
+.chip{font-family:var(--font-display);font-size:.66rem;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:20px;font-weight:500}
+.chip.ok{background:rgba(63,181,143,.18);color:var(--done)}
+.chip.mid{background:rgba(26,111,232,.18);color:var(--accent-soft)}
+.chip.neu{background:rgba(200,192,180,.12);color:var(--ivory-dim)}
+.docs{display:flex;flex-direction:column;gap:10px}
+.doc,.doc a{display:flex;justify-content:space-between;align-items:center;padding:11px 14px;background:var(--navy-deep);border-radius:10px;border:1px solid var(--line);text-decoration:none;transition:border-color .2s}
+a.doc:hover{border-color:var(--accent)}
+.doc .t{font-size:.9rem;color:var(--ivory)}
+.updatetext p{color:var(--ivory);font-size:1.02rem;line-height:1.7;margin-bottom:12px}
+.updatetext p:last-child{margin-bottom:0}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:26px 0 50px;color:var(--ivory-dim);font-size:.8rem;text-align:center}
+@media(max-width:860px){.grid2{grid-template-columns:1fr}.gname{width:120px}.ghead{margin-left:120px}.units{grid-template-columns:repeat(5,1fr)}}
+@media(prefers-reduced-motion:reduce){.reveal{transition:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="head-row">
+    <div class="logos">
+      <span class="logo-wrap"><img src="logo-aresta.png" alt="Aresta" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="lf" style="display:none">Aresta</span></span>
+      <span class="logo-wrap"><img src="logo-globalnest.png" alt="Global Nest" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="lf" style="display:none">Global Nest</span></span>
+      <span class="logo-wrap"><img src="logo-vitoria.png" alt="Vitória" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="lf" style="display:none">Vitória</span></span>
+    </div>
+    <div class="nav">
+      <span class="who" id="who"></span>
+      <a class="navbtn" href="https://drive.google.com/drive/folders/10HuYN1EBEumTOS7pIDO62rUaNvBy7il4?usp=sharing" target="_blank" rel="noopener">Pictures</a>
+      <a class="navbtn" href="#" onclick="logout();return false;">Sign out</a>
+      <span class="snap" id="snap">Loading...</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Investor Update</div>
+    <img class="castelo-logo" src="logo-castelo.png" alt="Castelo Setúbal"
+         onerror="this.style.display='none';document.getElementById('ct').style.display='block'">
+    <h1 id="ct" style="display:none">Castelo Setúbal</h1>
+    <p class="promoted">Promoted by Aresta Vitalicia, Global Nest and Vitória.</p>
+    <p>A 14-unit residential development on Rua do Castelo, Setúbal.</p>
+  </section>
+
+  <section class="block reveal" id="updateSection" style="display:none">
+    <h2>Developer Update</h2>
+    <div class="panel"><div class="updatetext" id="updateText"></div></div>
+  </section>
+
+  <section class="block reveal">
+    <h2>Project Timeline</h2>
+    <div class="hint">Where the project stands today and what comes next.</div>
+    <div class="panel">
+      <div class="gantt"><div class="ghead" id="ghead"></div><div id="grows"></div></div>
+      <div class="legend-row" style="margin-top:18px">
+        <span><span class="dot" style="background:var(--done)"></span>Done</span>
+        <span><span class="dot" style="background:var(--progress)"></span>In progress</span>
+        <span><span class="dot" style="background:var(--planned)"></span>Planned</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block reveal">
+    <h2>Budget vs Actual</h2>
+    <div class="hint">Plan figures include VAT. Actual is paid to date.</div>
+    <div class="panel" id="budget"></div>
+  </section>
+
+  <section class="block reveal">
+    <h2>Cashflow</h2>
+    <div class="hint">Monthly income received versus money paid out.</div>
+    <div class="panel">
+      <div class="cf" id="cf"></div>
+      <div class="legend-row" style="justify-content:center;margin-top:16px">
+        <span><span class="dot" style="background:var(--done)"></span>Income</span>
+        <span><span class="dot" style="background:var(--accent)"></span>Spend (paid)</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block reveal">
+    <h2>Sales</h2>
+    <div class="hint" id="salesHint"></div>
+    <div class="panel" style="margin-bottom:24px">
+      <div class="units" id="units"></div>
+      <div class="legend-row" style="margin-top:16px">
+        <span><span class="dot" style="background:var(--done)"></span>Sold</span>
+        <span><span class="dot" style="background:var(--accent-soft)"></span>Reserved</span>
+        <span><span class="dot" style="background:var(--navy-deep);border:1px solid var(--line)"></span>Available</span>
+      </div>
+    </div>
+    <div class="panel" id="salesTable"></div>
+  </section>
+
+  <section class="block reveal" id="docsSection" style="display:none">
+    <h2>Documents</h2>
+    <div class="hint">Shared project documents. Click to open in a new tab.</div>
+    <div class="panel"><div class="docs" id="docs"></div></div>
+  </section>
+</main>
+
+<footer class="wrap">
+  Aresta Vitalicia, Lda &middot; investors@arestapt.com &middot; Castelo Setúbal &middot; Confidential &mdash; for investors only.<br>
+  Figures are a snapshot and may change. This page does not constitute an offer or investment advice.
+</footer>
+
+<script>
+const eur  = n => '€' + Math.round(n||0).toLocaleString('en-US');
+const eurK = n => Math.abs(n||0)>=1e6 ? '€'+((n||0)/1e6).toFixed(2)+'M' : '€'+Math.round((n||0)/1000)+'K';
+const num  = v => parseFloat(((v==null?'':''+v).replace(/[^0-9.\-]/g,''))) || 0;
+function esc(s){ return (s==null?'':''+s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function sc(s){ s=(s||'').toLowerCase(); if(s.indexOf('done')>=0)return'done'; if(s.indexOf('progress')>=0)return'progress'; return'planned'; }
+
+function render(j){
+  const k=j.kpi||{}, s=j.sales||{}, items=(s.items||[]);
+  document.getElementById('snap').textContent = 'Live · updated ' + (j.updated||'');
+
+  if((j.summary||[]).length){
+    document.getElementById('updateSection').style.display='';
+    document.getElementById('updateText').innerHTML=(j.summary||[]).map(t=>`<p>${esc(t)}</p>`).join('');
+  }
+
+  const T0=new Date(2025,8,1),T1=new Date(2028,11,1),span=(T1-T0),posPct=d=>(new Date(d)-T0)/span*100;
+  const ghead=document.getElementById('ghead'); ghead.innerHTML='';
+  [2026,2027,2028].forEach(y=>ghead.innerHTML+=`<span class="gyear" style="left:${posPct(new Date(y,0,1))}%">${y}</span>`);
+  document.getElementById('grows').innerHTML=(j.timeline||[]).map(t=>{
+    let p=num(t[4]); if(p<=1)p=p*100;
+    const l=posPct(t[1]),w=posPct(t[2])-posPct(t[1]);
+    return `<div class="grow"><div class="gname">${esc(t[0])}</div><div class="gtrack"><div class="gbar ${sc(t[3])}" style="left:${l}%;width:${w}%">${Math.round(p)?Math.round(p)+'%':''}</div></div></div>`;
+  }).join('');
+  const grows=document.getElementById('grows'); grows.style.position='relative';
+  const nl=document.createElement('div'); nl.className='nowline';
+  nl.style.left='calc(200px + (100% - 200px) * '+(posPct(new Date())/100)+')'; grows.appendChild(nl);
+
+  const budget=j.budget||[],maxB=Math.max(...budget.map(g=>num(g[1])),1);
+  document.getElementById('budget').innerHTML=budget.map(g=>{
+    const planW=num(g[1])/maxB*100,actW=num(g[1])?Math.min(100,num(g[2])/num(g[1])*100):0;
+    return `<div class="brow"><div class="blab"><b>${esc(g[0])}</b><span class="v">${eur(num(g[2]))} / ${eur(num(g[1]))}</span></div>
+      <div class="track" style="width:${planW}%"><div class="plan"></div><div class="act" style="width:${actW}%"></div></div></div>`;
+  }).join('');
+
+  const cf=j.cashflow||[],maxC=Math.max(...cf.map(r=>Math.max(num(r[1]),num(r[2]))),1);
+  document.getElementById('cf').innerHTML=cf.map(r=>{
+    const ih=num(r[1])/maxC*100,sh=num(r[2])/maxC*100;
+    return `<div class="col"><div class="pair">
+      <div class="b inc" style="height:${ih}%" title="Income ${eur(num(r[1]))}"></div>
+      <div class="b spd" style="height:${sh}%" title="Spend ${eur(num(r[2]))}"></div>
+      </div><div class="m">${esc(r[0])}</div></div>`;
+  }).join('');
+
+  const UVALID={sold:1,reserved:1,available:1};
+  const sUnits=(s.units||[]).filter(u=>UVALID[(u.status||'').toString().trim().toLowerCase()]);
+  let soldN=0,resN=0,availN=0;
+  sUnits.forEach(u=>{ const st=(u.status||'').toLowerCase(); if(st==='sold')soldN++; else if(st==='reserved')resN++; else availN++; });
+  const totalN=sUnits.length||num(k.units)||14;
+
+  if(sUnits.length){
+    const blocks={};
+    sUnits.forEach(u=>{ const b=(u.block||'').toString().trim()||'—'; (blocks[b]=blocks[b]||[]).push(u); });
+    document.getElementById('units').innerHTML=Object.keys(blocks).sort().map(b=>{
+      const label=esc(b.replace(/bloco/i,'Block'));
+      const cards=blocks[b].map(u=>{
+        const st=(u.status||'').toLowerCase();
+        const cls=st==='sold'?'sold':(st==='reserved'?'reserved':'available');
+        const floor=(u.floor!=null&&(''+u.floor).trim()!=='')?`Floor ${esc(u.floor)}`:'';
+        const meta=[floor,esc(u.type)].filter(Boolean).join(' · ');
+        if(st==='sold'){
+          return `<div class="ucard sold">
+            <div class="utop"><span class="un">${esc(u.unit)}</span><span class="utag">Sold</span></div>
+            <div class="umeta">${meta}</div>
+            <div class="ulist">${eur(num(u.list))}</div>
+            <div class="uprice">${eur(num(u.agreed))}</div></div>`;
+        }
+        const tag=st==='reserved'?'<span class="utag res">Reserved</span>':'';
+        return `<div class="ucard ${cls}">
+          <div class="utop"><span class="un">${esc(u.unit)}</span>${tag}</div>
+          <div class="umeta">${meta}</div>
+          <div class="uprice">${eur(num(u.list))}</div></div>`;
+      }).join('');
+      return `<div><div class="blocklabel">${label}</div><div class="blockgrid">${cards}</div></div>`;
+    }).join('');
+  } else {
+    let u='';
+    for(let i=0;i<totalN;i++){ const cls=i<soldN?'sold':(i<soldN+resN?'reserved':'available'); u+=`<div class="ucard ${cls}" style="min-height:auto;align-items:center;justify-content:center"><span class="un">${i+1}</span></div>`; }
+    document.getElementById('units').innerHTML=`<div class="blockgrid">${u}</div>`;
+  }
+  document.getElementById('salesHint').textContent=`${soldN} sold · ${resN} reserved · ${availN} available of ${totalN} residences.`;
+
+  const st=document.getElementById('salesTable');
+  if(!items.length){
+    st.innerHTML='<div style="color:var(--ivory-dim)">No sales recorded yet.</div>';
+  } else {
+    let rows=items.map(x=>{
+      const cl=(x.status||'').toLowerCase()==='sold'?'chip ok':'chip mid';
+      return `<tr>
+        <td><span class="${cl}">${esc(x.status)}</span></td>
+        <td><b>Apt ${esc(x.unit)}</b>${x.type?` <span style="color:var(--ivory-dim);font-size:.8rem">${esc(x.type)}</span>`:''}</td>
+        <td class="amt">${eur(num(x.price))}</td>
+        <td class="amt" style="color:var(--done)">${eur(num(x.paid))}</td>
+        <td class="amt" style="color:var(--ivory-dim)">${eur(num(x.price)-num(x.paid))}</td>
+      </tr>`;
+    }).join('');
+    rows += `<tr class="total">
+      <td colspan="2">Total</td>
+      <td class="amt">${eur(num(s.total_sold))}</td>
+      <td class="amt">${eur(num(s.total_paid))}</td>
+      <td class="amt" style="color:var(--ivory-dim)">${eur(num(s.total_sold)-num(s.total_paid))}</td>
+    </tr>`;
+    st.innerHTML=`<div class="lscroll"><table class="ltable">
+      <tr><th></th><th>Apartment</th><th class="amt">Sale Price</th><th class="amt">Received</th><th class="amt">Outstanding</th></tr>
+      ${rows}</table></div>
+      <div class="legend-row" style="margin-top:14px">
+        <span><span class="dot" style="background:var(--done)"></span>Sold</span>
+        <span><span class="dot" style="background:var(--accent-soft)"></span>Reserved</span>
+      </div>`;
+  }
+
+  if((j.documents||[]).length){
+    document.getElementById('docsSection').style.display='';
+    document.getElementById('docs').innerHTML=(j.documents||[]).map(d=>{
+      const link=d.link||'',name=esc(d.name||'');
+      return link?`<a class="doc" href="${esc(link)}" target="_blank" rel="noopener"><span class="t">${name}</span><span class="chip mid">Open</span></a>`
+                 :`<div class="doc"><span class="t">${name}</span><span class="chip neu">No link</span></div>`;
+    }).join('');
+  }
+
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+}
+
+
+// Live data comes from the Apps Script web app, so the Google Sheet stays private.
+// The access token is no longer stored in this file. It is granted at login (login.html),
+// kept in the browser session, and cleared on sign-out or when the tab closes.
+const FEED_URL   = 'https://script.google.com/macros/s/AKfycbzILBYolCJM7CPBu2X2oWbfskhR17cdLsUGyuE59CTzsMU2Ei-iO8V1JMa-whcGC1G10w/exec';
+const LOGIN_PAGE = '/login';
+const FEED_TOKEN = sessionStorage.getItem('castelo_token') || '';
+
+if(!FEED_TOKEN){ location.replace(LOGIN_PAGE); }
+
+(function(){ var n=sessionStorage.getItem('castelo_name'); if(n){ var el=document.getElementById('who'); if(el) el.textContent='Hi, '+n; } })();
+
+async function init(){
+  if(!FEED_TOKEN) return;
+  try{
+    const res = await fetch(FEED_URL + '?token=' + encodeURIComponent(FEED_TOKEN), {cache:'no-store'});
+    if(!res.ok) throw new Error('http '+res.status);
+    const d = await res.json();
+    if(d && d.error){ sessionStorage.removeItem('castelo_token'); location.replace(LOGIN_PAGE); return; }
+    render(d);
+  }catch(e){
+    document.getElementById('snap').textContent='Live data unavailable';
+    console.error(e);
+  }
+}
+function logout(){ sessionStorage.removeItem('castelo_token'); sessionStorage.removeItem('castelo_name'); location.replace(LOGIN_PAGE); }
+init();
+</script>
+</body>
+</html>

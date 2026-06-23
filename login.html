@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Castelo Setúbal · Investor Access</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#2C3E50;--navy-deep:#22303d;--navy-soft:#34495e;
+  --ivory:#C8C0B4;--ivory-dim:#9aa3ab;--white:#ffffff;
+  --accent:#1A6FE8;--accent-soft:#5BA3F5;--done:#3FB58F;
+  --line:rgba(200,192,180,0.16);--card:#2f4254;
+  --font-display:'Oswald',sans-serif;--font-body:'Schibsted Grotesk',sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:radial-gradient(120% 120% at 50% 0%,#34495e 0%,var(--navy) 45%,var(--navy-deep) 100%);
+  color:var(--ivory);font-family:var(--font-body);line-height:1.5;-webkit-font-smoothing:antialiased;
+  display:flex;align-items:center;justify-content:center;padding:24px}
+.card{width:100%;max-width:380px;background:rgba(34,48,61,.72);border:1px solid var(--line);border-radius:16px;
+  padding:38px 34px 30px;backdrop-filter:blur(4px);box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.brand{text-align:center;margin-bottom:26px}
+.brand .mark{font-family:var(--font-display);font-weight:600;letter-spacing:7px;font-size:1.9rem;color:var(--white);text-transform:uppercase}
+.brand .sub{font-family:var(--font-display);text-transform:uppercase;letter-spacing:3px;font-size:.66rem;color:var(--accent-soft);margin-top:8px}
+label{display:block;font-family:var(--font-display);text-transform:uppercase;letter-spacing:1.5px;font-size:.66rem;color:var(--ivory-dim);margin:0 0 7px}
+.field{margin-bottom:18px}
+input{width:100%;background:var(--navy-deep);border:1px solid var(--line);border-radius:9px;color:var(--white);
+  font-family:var(--font-body);font-size:.95rem;padding:12px 13px;outline:none;transition:border-color .2s}
+input::placeholder{color:#65727e}
+input:focus{border-color:var(--accent)}
+button{width:100%;margin-top:6px;background:var(--accent);color:#fff;border:none;border-radius:9px;
+  font-family:var(--font-display);text-transform:uppercase;letter-spacing:2px;font-size:.82rem;font-weight:500;
+  padding:13px;cursor:pointer;transition:background .2s,opacity .2s}
+button:hover{background:#1560cc}
+button:disabled{opacity:.6;cursor:default}
+.msg{min-height:18px;margin-top:14px;text-align:center;font-size:.82rem;color:#e98a8a}
+.foot{text-align:center;margin-top:22px;font-family:var(--font-display);text-transform:uppercase;letter-spacing:2px;font-size:.6rem;color:var(--ivory-dim)}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="brand">
+      <div class="mark">Castelo</div>
+      <div class="sub">Setúbal · Investor Access</div>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" type="email" autocomplete="username" placeholder="you@email.com" autofocus>
+    </div>
+    <div class="field">
+      <label for="pw">Password</label>
+      <input id="pw" type="password" autocomplete="current-password" placeholder="••••••••">
+    </div>
+
+    <button id="btn">Enter</button>
+    <div class="msg" id="msg"></div>
+
+    <div class="foot">Aresta &nbsp;·&nbsp; Global Nest</div>
+  </div>
+
+<script>
+// Same Apps Script web app as the dashboard.
+const SCRIPT_URL    = 'https://script.google.com/macros/s/AKfycbzILBYolCJM7CPBu2X2oWbfskhR17cdLsUGyuE59CTzsMU2Ei-iO8V1JMa-whcGC1G10w/exec';
+// Where to send the investor after a successful login. The dashboard is served at /dashboard
+// (the file dashboard.html). Change this only if you deploy the dashboard under a different path.
+const DASHBOARD_PAGE = '/dashboard';
+
+const email=document.getElementById('email'), pw=document.getElementById('pw');
+const btn=document.getElementById('btn'), msg=document.getElementById('msg');
+
+// If already signed in this session, skip straight to the dashboard.
+if(sessionStorage.getItem('castelo_token')) location.replace(DASHBOARD_PAGE);
+
+async function submit(){
+  const e=email.value.trim(), p=pw.value;
+  if(!e || !p){ msg.textContent='Enter your email and password.'; return; }
+  btn.disabled=true; const label=btn.textContent; btn.textContent='Checking...'; msg.textContent='';
+  try{
+    const res=await fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify({action:'login',email:e,password:p})});
+    const d=await res.json();
+    if(d && d.ok && d.token){
+      sessionStorage.setItem('castelo_token',d.token);
+      if(d.name) sessionStorage.setItem('castelo_name',d.name);
+      location.replace(DASHBOARD_PAGE);
+      return;
+    }
+    msg.textContent='Email or password not recognized.';
+  }catch(err){
+    msg.textContent='Could not reach the server. Try again.';
+    console.error(err);
+  }
+  btn.disabled=false; btn.textContent=label;
+}
+
+btn.addEventListener('click',submit);
+[email,pw].forEach(el=>el.addEventListener('keydown',ev=>{ if(ev.key==='Enter') submit(); }));
+</script>
+</body>
+</html>
