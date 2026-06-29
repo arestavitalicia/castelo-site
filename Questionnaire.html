@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor Suitability Questionnaire — Forcingline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1a1a;
+    --ink-secondary: #4a4a4a;
+    --ink-muted: #7a7a7a;
+    --surface: #ffffff;
+    --page-bg: #f5f4f2;
+    --border: #d4d0ca;
+    --border-light: #e8e5df;
+    --accent: #2c4a3e;
+    --accent-hover: #1e3a2e;
+    --accent-light: #e8efec;
+    --field-bg: #fdfcfb;
+    --error: #b44;
+    --font: 'Inter', -apple-system, system-ui, sans-serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: var(--font);
+    color: var(--ink);
+    background: var(--page-bg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* ---- Container ---- */
+  .form-container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 3rem;
+  }
+
+  @media (min-width: 640px) {
+    .form-container { padding: 3rem 2rem 4rem; }
+  }
+
+  /* ---- Header ---- */
+  .form-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .company-id {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  .form-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.25;
+    margin-bottom: 0.6rem;
+  }
+
+  @media (min-width: 640px) {
+    .form-title { font-size: 1.75rem; }
+  }
+
+  .form-subtitle {
+    font-size: 0.9rem;
+    color: var(--ink-secondary);
+    line-height: 1.55;
+  }
+
+  /* ---- Sections ---- */
+  .form-section {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .form-section { padding: 2rem; }
+  }
+
+  .section-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+  }
+
+  /* ---- Fields ---- */
+  .field-row {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .field-row-2 { grid-template-columns: 1fr 1fr; }
+    .field-row-3 { grid-template-columns: 2fr 2fr 1fr; }
+  }
+
+  .field-group { margin-bottom: 0.25rem; }
+
+  .field-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.35rem;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="date"] {
+    width: 100%;
+    padding: 0.65rem 0.75rem;
+    font-family: var(--font);
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--field-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  input:focus, textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-light);
+  }
+
+  textarea {
+    width: 100%;
+    padding: 0.65rem 0.75rem;
+    font-family: var(--font);
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--field-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    outline: none;
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.5;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  /* ---- Radio buttons ---- */
+  .radio-group {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .radio-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--field-bg);
+    transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .radio-option:hover {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .radio-option input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
+    cursor: pointer;
+    margin: 0;
+  }
+
+  .radio-option span {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .radio-option.selected {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  /* ---- Accredited gate ---- */
+  .gate-question {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+
+  .gate-reference {
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  /* ---- Conditional section ---- */
+  .conditional-section {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
+    margin-top: 0;
+  }
+
+  .conditional-section.visible {
+    max-height: 3000px;
+    opacity: 1;
+    margin-top: 1rem;
+  }
+
+  .conditional-header {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ink);
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ---- Questions ---- */
+  .question {
+    margin-bottom: 1.5rem;
+  }
+
+  .question:last-child {
+    margin-bottom: 0;
+  }
+
+  .question-number {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+
+  .question-text {
+    font-size: 0.9rem;
+    color: var(--ink);
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ---- Checkboxes (declaration) ---- */
+  .checkbox-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .checkbox-item + .checkbox-item {
+    border-top: 1px solid var(--border-light);
+  }
+
+  .checkbox-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+
+  .checkbox-item span {
+    font-size: 0.85rem;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  /* ---- Submit ---- */
+  .form-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 0.75rem 2rem;
+    font-family: var(--font);
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-hover);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink-secondary);
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover {
+    background: var(--page-bg);
+  }
+
+  /* ---- Footer ---- */
+  .legal-footer {
+    margin-top: 1.5rem;
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    font-size: 0.72rem;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+
+  .legal-footer strong {
+    font-weight: 600;
+  }
+
+  /* ---- Validation ---- */
+  .field-error {
+    border-color: var(--error) !important;
+  }
+
+  .error-message {
+    font-size: 0.75rem;
+    color: var(--error);
+    margin-top: 0.25rem;
+    display: none;
+  }
+
+  /* ---- Print ---- */
+  @media print {
+    body { background: white; }
+    .form-container { max-width: 100%; padding: 0; }
+    .form-section { border: 1px solid #ddd; break-inside: avoid; }
+    .btn { display: none; }
+    .form-actions { display: none; }
+    .conditional-section { max-height: none !important; opacity: 1 !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="form-container">
+
+  <div class="form-header">
+    <div class="company-id">Forcingline, Unipessoal Lda &middot; NIPC 515 796 549</div>
+    <h1 class="form-title">Investor Suitability Questionnaire</h1>
+    <p class="form-subtitle">This questionnaire helps us assess your suitability for participation in Forcingline-managed real estate development projects in Portugal. Please answer all questions completely and accurately.</p>
+  </div>
+
+  <form id="investorForm" novalidate>
+
+    <!-- IDENTIFICATION -->
+    <div class="form-section">
+      <div class="field-row field-row-3">
+        <div class="field-group">
+          <label class="field-label" for="fullName">Full Legal Name</label>
+          <input type="text" id="fullName" name="fullName" required>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="entityName">Entity Name <span style="font-weight:400; color:var(--ink-muted)">(if applicable)</span></label>
+          <input type="text" id="entityName" name="entityName">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="formDate">Date</label>
+          <input type="date" id="formDate" name="formDate" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACCREDITED INVESTOR GATE -->
+    <div class="form-section">
+      <p class="gate-question">Are you an accredited investor?</p>
+      <p class="gate-reference">Reg D, SEC Rule 501(a)</p>
+
+      <div class="radio-group">
+        <label class="radio-option" id="optionYes">
+          <input type="radio" name="accredited" value="yes" required>
+          <span>Yes</span>
+        </label>
+        <label class="radio-option" id="optionNo">
+          <input type="radio" name="accredited" value="no">
+          <span>No</span>
+        </label>
+      </div>
+
+      <!-- CONDITIONAL QUESTIONS -->
+      <div class="conditional-section" id="nonAccreditedQuestions">
+        <div class="conditional-header">Questions for Non-Accredited Investors</div>
+
+        <div class="question">
+          <div class="question-number">1</div>
+          <p class="question-text">Describe your approximate annual income and net worth (excluding primary residence), including currency. Indicate how your net worth is composed (e.g. real estate, savings, business equity, investments, retirement accounts).</p>
+          <textarea name="q1_income" rows="4"></textarea>
+        </div>
+
+        <div class="question">
+          <div class="question-number">2</div>
+          <p class="question-text">Outside of real estate, what types of investment instruments do you have experience with (e.g. publicly traded securities, private placements, limited partnerships, private equity, convertible notes, crowdlending, or other)?</p>
+          <textarea name="q2_instruments" rows="4"></textarea>
+        </div>
+
+        <div class="question">
+          <div class="question-number">3</div>
+          <p class="question-text">Describe your experience with real estate investments: the types (rental, commercial, land, development, syndication, or other), approximate number of transactions, and the time period over which you have been active. If you have invested in real estate development specifically (construction, renovation, or conversion), describe your role.</p>
+          <textarea name="q3_realestate" rows="4"></textarea>
+        </div>
+
+        <div class="question">
+          <div class="question-number">4</div>
+          <p class="question-text">What proportion of your total investable assets (excluding primary residence and retirement accounts) does this intended investment represent?</p>
+          <textarea name="q4_proportion" rows="2"></textarea>
+        </div>
+
+        <div class="question">
+          <div class="question-number">5</div>
+          <p class="question-text">In your own words, describe what you understand a profit-participation contract to be, and list the principal risks you associate with investing in a real estate development project in Portugal through such a contract.</p>
+          <textarea name="q5_caep" rows="5"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- DECLARATION -->
+    <div class="form-section">
+      <div class="section-label">Declaration</div>
+
+      <label class="checkbox-item">
+        <input type="checkbox" name="decl1" required>
+        <span>I confirm that all information provided is true, complete, and accurate to the best of my knowledge.</span>
+      </label>
+
+      <label class="checkbox-item">
+        <input type="checkbox" name="decl2" required>
+        <span>I understand that this questionnaire does not constitute an offer or commitment by either party, and that Forcingline reserves the right to decline participation at its sole discretion.</span>
+      </label>
+
+      <label class="checkbox-item">
+        <input type="checkbox" name="decl3" required>
+        <span>I understand that participation in real estate development projects involves risk of loss, illiquidity, and uncertain returns, and that past performance does not guarantee future results.</span>
+      </label>
+
+      <label class="checkbox-item">
+        <input type="checkbox" name="decl4" required>
+        <span>I acknowledge that I am responsible for obtaining independent legal and tax advice in my jurisdiction regarding the implications of this investment.</span>
+      </label>
+
+      <label class="checkbox-item">
+        <input type="checkbox" name="decl5" required>
+        <span>I consent to Forcingline processing the personal data provided in this questionnaire for the purposes of investor suitability assessment and compliance with applicable AML/KYC obligations, in accordance with the General Data Protection Regulation (EU) 2016/679.</span>
+      </label>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-primary" onclick="window.print()">Print / Save PDF</button>
+      </div>
+    </div>
+
+  </form>
+
+  <div class="legal-footer">
+    <strong>Data Protection Notice.</strong> The personal data collected in this questionnaire is processed by Forcingline, Unipessoal Lda (NIPC 515 796 549), as controller, for the purposes of investor suitability assessment and compliance with AML/KYC obligations under Lei 83/2017 and Regulation (EU) 2016/679. You have the right to access, rectify, erase, restrict processing, and port your data by contacting Forcingline at its registered address. If you believe your rights have been violated, you may lodge a complaint with the Comiss&atilde;o Nacional de Prote&ccedil;&atilde;o de Dados (CNPD).
+  </div>
+
+</div>
+
+<script>
+  // ---- Conditional logic ----
+  const radios = document.querySelectorAll('input[name="accredited"]');
+  const conditionalSection = document.getElementById('nonAccreditedQuestions');
+  const optionYes = document.getElementById('optionYes');
+  const optionNo = document.getElementById('optionNo');
+  const conditionalTextareas = conditionalSection.querySelectorAll('textarea');
+
+  radios.forEach(radio => {
+    radio.addEventListener('change', function () {
+      const isNo = this.value === 'no';
+
+      if (isNo) {
+        conditionalSection.classList.add('visible');
+        conditionalTextareas.forEach(ta => ta.setAttribute('required', ''));
+      } else {
+        conditionalSection.classList.remove('visible');
+        conditionalTextareas.forEach(ta => {
+          ta.removeAttribute('required');
+          ta.classList.remove('field-error');
+        });
+      }
+
+      // Update selected styles
+      optionYes.classList.toggle('selected', this.value === 'yes');
+      optionNo.classList.toggle('selected', this.value === 'no');
+    });
+  });
+
+  // ---- Auto-fill today's date ----
+  const dateField = document.getElementById('formDate');
+  if (dateField && !dateField.value) {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    dateField.value = `${yyyy}-${mm}-${dd}`;
+  }
+
+  // ---- Clear validation on input ----
+  document.querySelectorAll('input, textarea').forEach(el => {
+    el.addEventListener('input', () => el.classList.remove('field-error'));
+  });
+  document.querySelectorAll('.checkbox-item input').forEach(el => {
+    el.addEventListener('change', () => el.closest('.checkbox-item').style.color = '');
+  });
+</script>
+
+</body>
+</html>
