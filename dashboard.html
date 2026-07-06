@@ -6,7 +6,7 @@
 <title>Castelo Setúbal — Investor Update | Aresta</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Oswald:wght@300;400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --navy:#2C3E50;--navy-deep:#22303d;--navy-soft:#34495e;
@@ -27,6 +27,8 @@ header{position:sticky;top:0;z-index:20;background:rgba(34,48,61,.92);backdrop-f
 .logos{display:flex;align-items:center;gap:20px}
 .logos img{height:28px;width:auto}
 .lf{color:var(--ivory);font-family:var(--font-display);letter-spacing:1px;font-size:.8rem;text-transform:uppercase}
+.castelo-word{font-family:'Lobster',cursive;font-size:1.3rem;color:var(--ivory);text-decoration:none;line-height:1;transition:color .2s}
+.castelo-word:hover{color:var(--white)}
 .nav{display:flex;align-items:center;gap:16px}
 .navbtn{font-family:var(--font-display);text-transform:uppercase;letter-spacing:1px;font-size:.76rem;color:var(--ivory);border:1px solid var(--line);padding:7px 16px;border-radius:20px;text-decoration:none;transition:border-color .2s,color .2s}
 .navbtn:hover{border-color:var(--accent);color:#fff}
@@ -114,12 +116,12 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:26px 0 50px;colo
 </style>
 </head>
 <body>
-<header>
+<header id="top">
   <div class="head-row">
     <div class="logos">
-      <span class="logo-wrap"><img src="logo-aresta.png" alt="Aresta" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="lf" style="display:none">Aresta</span></span>
-      <span class="logo-wrap"><img src="logo-globalnest.png" alt="Global Nest" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="lf" style="display:none">Global Nest</span></span>
-      <span class="logo-wrap"><img src="logo-vitoria.png" alt="Vitória" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="lf" style="display:none">Vitória</span></span>
+      <a class="castelo-word" href="#top" title="Back to top">Castelo</a>
+      <span class="logo-wrap"><img src="assets/images/aresta_logo.jpg" alt="Aresta" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="lf" style="display:none">Aresta</span></span>
+      <span class="logo-wrap"><img src="assets/images/nest_logo.png" alt="Global Nest" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="lf" style="display:none">Global Nest</span></span>
     </div>
     <div class="nav">
       <span class="who" id="who"></span>
@@ -136,7 +138,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:26px 0 50px;colo
     <img class="castelo-logo" src="logo-castelo.png" alt="Castelo Setúbal"
          onerror="this.style.display='none';document.getElementById('ct').style.display='block'">
     <h1 id="ct" style="display:none">Castelo Setúbal</h1>
-    <p class="promoted">Promoted by Aresta Vitalicia, Global Nest and Vitória.</p>
+    <p class="promoted">Promoted by Aresta Vitalicia and Global Nest.</p>
     <p>A 14-unit residential development on Rua do Castelo, Setúbal.</p>
   </section>
 
