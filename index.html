@@ -7,7 +7,7 @@
 <meta name="description" content="Fourteen residences in Setúbal's historic centre. Three buildings, a private garden, and a 17th-century bastion at your back.">
 <meta property="og:title" content="Castelo | Setúbal">
 <meta property="og:description" content="Fourteen residences in Setúbal's historic centre. Where what was meets what is about to be.">
-<meta property="og:image" content="https://castelo.living/hero.jpg">
+<meta property="og:image" content="https://castelo.living/assets/images/hero.jpg">
 <meta property="og:url" content="https://castelo.living">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Lobster:wght@400&display=swap" rel="stylesheet">
@@ -31,7 +31,7 @@
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
-body { font-family:var(--sans); color:var(--text); background:var(--white); -webkit-font-smoothing:antialiased; }
+body { font-family:var(--sans); color:var(--text); background:var(--white); -webkit-font-smoothing:antialiased; overflow-x:clip; }
 
 /* ─── NAV ─── */
 nav {
@@ -562,11 +562,9 @@ footer { background:#111B24; padding:50px 80px; display:flex; justify-content:sp
   </div>
 </section>
 
-<!-- VIDEO / 3D BACKGROUND -->
+<!-- FULL-WIDTH IMAGE (replaces former video) -->
 <section class="media-section" style="position:relative; min-height:600px; display:flex; align-items:center; justify-content:center; overflow:hidden; padding:0;">
-  <video autoplay muted loop poster="assets/images/ext1.png" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
-    <source src="assets/video/castelofly.mp4" type="video/mp4">
-  </video>
+  <img src="assets/images/castelo_aerial.jpg" onerror="this.onerror=null;this.src='assets/images/ext1.png';" alt="Castelo, Setúbal" loading="lazy" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
 </section>
 
 <!-- IMAGE BREAK 4 — Bedrooms + bathroom -->
@@ -765,9 +763,12 @@ window.addEventListener('load', function(){
     scrollWheelZoom: false
   });
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: 'abcd', maxZoom: 19
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles © <a href="https://www.esri.com">Esri</a> · HERE, Garmin, © OpenStreetMap contributors',
+    maxZoom: 16
+  }).addTo(map);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 16, pane: 'overlayPane'
   }).addTo(map);
 
   const casteloIcon = L.divIcon({
